@@ -43,11 +43,25 @@
 
         /// `.child` authorization (child's device, Family Sharing) can only be revoked with the parent's Apple ID —
         /// the strong guarantee a parental-control app needs. `.individual` is the self-managed variant for teens/adults.
+        /// Child devices first try `.child` (the device's Apple Account is a child in the parent's Family Sharing group:
+        /// the parent approves, and only the parent can revoke). If the device is signed in with an adult or standalone
+        /// account, iOS rejects `.child` (e.g. `invalidAccountType`), so we fall back to `.individual` — the device owner
+        /// approves with Face ID / passcode — instead of leaving School Mode and the usage report non-functional.
         public func requestAuthorization(as role: MemberRole) async throws {
+            let center = AuthorizationCenter.shared
+            if role == .child {
+                do {
+                    try await center.requestAuthorization(for: .child)
+                    return
+                } catch {
+                    Log.screenTime
+                        .notice("`.child` authorization unavailable (\(String(describing: error), privacy: .public)); trying `.individual`")
+                }
+            }
             do {
-                try await AuthorizationCenter.shared.requestAuthorization(for: role == .child ? .child : .individual)
+                try await center.requestAuthorization(for: .individual)
             } catch {
-                Log.screenTime.error("FamilyControls authorization failed: \(error.localizedDescription, privacy: .public)")
+                Log.screenTime.error("FamilyControls authorization failed: \(String(describing: error), privacy: .public)")
                 throw KinError.permissionDenied(.screenTime)
             }
         }

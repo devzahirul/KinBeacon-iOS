@@ -57,8 +57,13 @@ targets:
     sources:
       - App/Sources
       - App/Resources
+    # Entitlements are generated from here — XcodeGen rewrites the .entitlements files on every `make project`.
     entitlements:
       path: App/KinBeacon.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.lynkto.kinbeacon]
+        aps-environment: development
     dependencies:
       - package: KinKit
         product: AppFeature
@@ -102,6 +107,9 @@ targets:
     sources: [Extensions/Monitor]
     entitlements:
       path: Extensions/Monitor/Monitor.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.lynkto.kinbeacon]
     info:
       path: Extensions/Monitor/Info.plist
       properties:
@@ -120,6 +128,9 @@ targets:
     sources: [Extensions/ShieldConfiguration]
     entitlements:
       path: Extensions/ShieldConfiguration/ShieldConfiguration.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.lynkto.kinbeacon]
     info:
       path: Extensions/ShieldConfiguration/Info.plist
       properties:
@@ -138,6 +149,9 @@ targets:
     sources: [Extensions/ShieldAction]
     entitlements:
       path: Extensions/ShieldAction/ShieldAction.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.lynkto.kinbeacon]
     info:
       path: Extensions/ShieldAction/Info.plist
       properties:
@@ -157,6 +171,9 @@ targets:
     sources: [Extensions/Report]
     entitlements:
       path: Extensions/Report/Report.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.lynkto.kinbeacon]
     info:
       path: Extensions/Report/Info.plist
       properties:

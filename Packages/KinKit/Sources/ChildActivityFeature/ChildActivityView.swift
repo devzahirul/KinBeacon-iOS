@@ -25,6 +25,9 @@ public struct ChildActivityView: View {
                 PeriodNavigator(title: model.periodTitle, canGoForward: model.canGoForward) { model.step($0) }
                 if let report = factories.usageReport, model.range == .day {
                     report().kinCard(padding: 0)
+                    Text("Shown by Apple’s Screen Time. If it stays empty, turn on Device protection in Help.")
+                        .font(.kinFootnote)
+                        .foregroundStyle(KinColor.textSecondary)
                 }
                 switch model.phase {
                 case .loading:

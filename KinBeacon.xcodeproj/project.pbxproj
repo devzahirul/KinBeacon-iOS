@@ -39,6 +39,7 @@
 		AC718AC3E58C8D0BD0038027 /* NetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C9720398A9E0FAFEA7F8D /* NetworkingTests.swift */; };
 		ACCB0DE881F6FCFA94338197 /* ChildFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */; };
 		B459DF7D2F353BBAFB0B054A /* LiveBackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F675A8A96DFE92ABBBA7320 /* LiveBackendClient.swift */; };
+		C714126CEE40BA0C8542B543 /* DeviceStateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F343F832FDB860A83A8C4B3 /* DeviceStateUITests.swift */; };
 		C995A39D532CA3227FC9E04E /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343CA75BA9E85F62A6CE3095 /* ScreenshotTests.swift */; };
 		CA5FBE99D24D5E29BC9887BC /* SupabaseIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0259812DF738243761A68B1B /* SupabaseIntegrationTests.swift */; };
 		CFFA1AF56565CD065BB28C16 /* KinBeaconUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */; };
@@ -128,6 +129,7 @@
 		14DACD19F9FF1F4CD65C406A /* ShieldConfiguration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldConfiguration.entitlements; sourceTree = "<group>"; };
 		16E47D42640BB6BD4087838E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		179AA820C473AA109A032B51 /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
+		1F343F832FDB860A83A8C4B3 /* DeviceStateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStateUITests.swift; sourceTree = "<group>"; };
 		21BE47096C506B4BA2B4A5D6 /* KinBeaconReport.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = KinBeaconReport.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AE60336A60AB7FBA7F3C03 /* LiveChildPairingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChildPairingUITests.swift; sourceTree = "<group>"; };
 		28941175F0A98E8113087E3A /* RoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingTests.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */,
+				1F343F832FDB860A83A8C4B3 /* DeviceStateUITests.swift */,
 				A5EEB05E4B977C2566A7B372 /* FamilySetupUITests.swift */,
 				2F08466B87CE2EE93904403D /* Info.plist */,
 				DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */,
@@ -693,6 +696,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACCB0DE881F6FCFA94338197 /* ChildFlowTests.swift in Sources */,
+				C714126CEE40BA0C8542B543 /* DeviceStateUITests.swift in Sources */,
 				30313733839C6667A0F507B3 /* FamilySetupUITests.swift in Sources */,
 				CFFA1AF56565CD065BB28C16 /* KinBeaconUITestCase.swift in Sources */,
 				500FDB605EB562468F5019ED /* LaunchPerformanceTests.swift in Sources */,

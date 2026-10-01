@@ -18,12 +18,12 @@
             DeviceActivityReport(
                 DeviceActivityReport.Context("Total Activity"),
                 filter: DeviceActivityFilter(
-                    segment: .daily(during: Calendar.current.dateInterval(of: .day, for: .now) ?? DateInterval()),
+                    segment: .hourly(during: Calendar.current.dateInterval(of: .day, for: .now) ?? DateInterval()),
                     users: children ? .children : .all,
                     devices: .all
                 )
             )
-            .frame(minHeight: 120)
+            .frame(minHeight: 520)
         }
     }
 #endif

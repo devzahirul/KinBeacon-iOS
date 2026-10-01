@@ -492,6 +492,8 @@ Two bugs only showed up on hardware — and how they were handled is part of the
 | Symptom | Root cause (from the device crash log) | Fix + guard |
 |---|---|---|
 | Child app aborted right after pairing | `CLMonitor("kinbeacon.places")` → `NSInternalInconsistencyException: Monitor name is not valid` (dots aren't allowed); the simulator path never creates a CLMonitor | alphanumeric name, one process-wide single-flight `GeofenceMonitor`, and a test that creates the monitor with the real name **on the device** |
+| Screen Time report empty on the child iPhone | `codesign -d --entitlements` showed **no** Family Controls / App Group / Push entitlements: XcodeGen rewrote the `.entitlements` files as empty dictionaries (path given, no properties); `.child` authorization also always fails on an adult Apple ID | entitlements declared in `project.yml` (generated, signed — verified with `codesign`); `.child` → `.individual` fallback; report extension now renders total, pickups, an hourly chart and top apps with their real icons via `Label(token)` |
+| Location step's *Continue* spun forever | iOS shows each location prompt once and doesn't call the delegate when it skips one | resolve when no prompt appears (app stays active) or on `didBecomeActive`; "Turn on" opens Settings when iOS won't prompt again |
 | "This device is already paired" on re-onboarding | a previous Supabase session in the Keychain was reused for the child | every pairing signs out and uses a fresh device account; covered by the live pairing UI test |
 
 ## Limitations & roadmap

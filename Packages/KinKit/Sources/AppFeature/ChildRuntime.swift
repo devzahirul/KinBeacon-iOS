@@ -117,6 +117,12 @@ public final class ChildRuntime {
     }
 
     private func initialSync() async {
+        // Onboarding explained Screen Time; if access was never granted (or the earlier attempt failed), ask once now —
+        // without it School Mode can't be enforced and the usage report stays empty.
+        if liveScreenTimeEnabled, await screenTime.authorizationState() == .notDetermined {
+            try? await screenTime.requestAuthorization(as: .child)
+            await reportPermissionsIfChanged()
+        }
         if let places = try? await backend.places() {
             await location.monitor(places: places)
         }

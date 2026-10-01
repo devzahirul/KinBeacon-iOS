@@ -35,10 +35,13 @@
                 if state == .whenInUse {
                     state = await location.requestAlways()
                 }
-                if state == .denied {
+                let result = await locationPermission()
+                // iOS shows each location prompt only once. If we still don't have "Always" + precise (denied earlier,
+                // the upgrade was declined, or approximate only), the only path left is the Settings app.
+                if result != .granted, state != .notDetermined {
                     await openSettings()
                 }
-                return await locationPermission()
+                return result
             case .notifications:
                 let settings = await UNUserNotificationCenter.current().notificationSettings()
                 if settings.authorizationStatus == .denied {
