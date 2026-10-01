@@ -43,6 +43,7 @@ Each of those has a section below that points to the exact files.
 
 ## Contents
 
+- [Website](#website)
 - [Run it](#run-it)
 - [Features](#features)
 - [Architecture](#architecture)
@@ -58,6 +59,14 @@ Each of those has a section below that points to the exact files.
 - [App Store readiness & platform policy](#app-store-readiness--platform-policy)
 - [Decisions & trade-offs](#decisions--trade-offs)
 - [Project layout](#project-layout) · [Limitations & roadmap](#limitations--roadmap)
+
+---
+
+## Website
+
+Explore the app at **[devzahirul.github.io/KinBeacon-iOS](https://devzahirul.github.io/KinBeacon-iOS/)** — a responsive product website with real parent and child screenshots, an interactive gallery, features, setup, and privacy information.
+
+Website source and publishing instructions: [website/README.md](website/README.md).
 
 ---
 
