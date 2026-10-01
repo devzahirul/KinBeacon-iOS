@@ -1,0 +1,4 @@
+// Shared build settings. Local overrides (e.g. KIN_API_BASE_URL) go in the git-ignored Local.xcconfig.
+DEVELOPMENT_TEAM = 6VC84T9283
+KIN_API_BASE_URL =
+#include? "Local.xcconfig"

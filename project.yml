@@ -1,0 +1,245 @@
+# XcodeGen spec — the .xcodeproj is generated, never hand-edited, so it never causes merge conflicts.
+# Regenerate with `make project`.
+name: KinBeacon
+options:
+  bundleIdPrefix: com.lynkto
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+  groupSortPosition: top
+
+configFiles:
+  Debug: Config/Base.xcconfig
+  Release: Config/Base.xcconfig
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    DEAD_CODE_STRIPPING: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    TARGETED_DEVICE_FAMILY: "1"
+    SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
+  configs:
+    Debug:
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+    Release:
+      SWIFT_COMPILATION_MODE: wholemodule
+      SWIFT_OPTIMIZATION_LEVEL: -O
+      DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+      VALIDATE_PRODUCT: YES
+
+packages:
+  KinKit:
+    path: Packages/KinKit
+
+targetTemplates:
+  ScreenTimeExtension:
+    type: app-extension
+    platform: iOS
+    dependencies:
+      - package: KinKit
+        product: ScreenTimeShared
+    settings:
+      base:
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
+
+targets:
+  KinBeacon:
+    type: application
+    platform: iOS
+    sources:
+      - App/Sources
+      - App/Resources
+    entitlements:
+      path: App/KinBeacon.entitlements
+    dependencies:
+      - package: KinKit
+        product: AppFeature
+      - target: KinBeaconMonitor
+      - target: KinBeaconShieldConfiguration
+      - target: KinBeaconShieldAction
+      - target: KinBeaconReport
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: KinBeacon
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSRequiresIPhoneOS: true
+        ITSAppUsesNonExemptEncryption: false
+        KinAPIBaseURL: $(KIN_API_BASE_URL)
+        NSLocationWhenInUseUsageDescription: KinBeacon shares your location with your family so they know you got where you're going.
+        NSLocationAlwaysAndWhenInUseUsageDescription: Choose “Always” so your family gets arrival alerts and can find you in an emergency, even when KinBeacon is closed.
+        UIBackgroundModes: [location, fetch, remote-notification]
+        BGTaskSchedulerPermittedIdentifiers: [com.lynkto.kinbeacon.refresh]
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIRequiredDeviceCapabilities: [arm64]
+        CFBundleURLTypes:
+          - CFBundleURLName: com.lynkto.kinbeacon
+            CFBundleURLSchemes: [kinbeacon]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+
+  # --- Screen Time extensions (separate processes, tiny memory budgets) ---
+
+  KinBeaconMonitor:
+    templates: [ScreenTimeExtension]
+    sources: [Extensions/Monitor]
+    entitlements:
+      path: Extensions/Monitor/Monitor.entitlements
+    info:
+      path: Extensions/Monitor/Info.plist
+      properties:
+        CFBundleDisplayName: KinBeacon Monitor
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).KinActivityMonitor
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.monitor
+
+  KinBeaconShieldConfiguration:
+    templates: [ScreenTimeExtension]
+    sources: [Extensions/ShieldConfiguration]
+    entitlements:
+      path: Extensions/ShieldConfiguration/ShieldConfiguration.entitlements
+    info:
+      path: Extensions/ShieldConfiguration/Info.plist
+      properties:
+        CFBundleDisplayName: KinBeacon Shield
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettingsUI.shield-configuration-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).KinShieldConfiguration
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.shieldconfiguration
+
+  KinBeaconShieldAction:
+    templates: [ScreenTimeExtension]
+    sources: [Extensions/ShieldAction]
+    entitlements:
+      path: Extensions/ShieldAction/ShieldAction.entitlements
+    info:
+      path: Extensions/ShieldAction/Info.plist
+      properties:
+        CFBundleDisplayName: KinBeacon Shield Action
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettings.shield-action-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).KinShieldAction
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.shieldaction
+
+  KinBeaconReport:
+    type: extensionkit-extension
+    platform: iOS
+    sources: [Extensions/Report]
+    entitlements:
+      path: Extensions/Report/Report.entitlements
+    info:
+      path: Extensions/Report/Info.plist
+      properties:
+        CFBundleDisplayName: KinBeacon Report
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        EXAppExtensionAttributes:
+          EXExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.report
+        SKIP_INSTALL: YES
+
+  # --- Tests ---
+
+  # Minimal host so the package unit tests run on a physical iPhone. KinBeacon must NOT host them: linking the same
+  # package modules into the app and its hosted test bundle makes Xcode turn them into dynamic frameworks.
+  KinKitTestHost:
+    type: application
+    platform: iOS
+    sources: [TestHost]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.testhost
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+
+  KinKitTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - Packages/KinKit/Tests
+    dependencies:
+      - target: KinKitTestHost
+      - package: KinKit
+        product: KinKitTesting
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/KinKitTestHost.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KinKitTestHost
+        BUNDLE_LOADER: $(TEST_HOST)
+        SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY: YES
+
+  KinBeaconUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [UITests]
+    dependencies:
+      - target: KinBeacon
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: KinBeacon
+
+schemes:
+  KinBeacon:
+    build:
+      targets:
+        KinBeacon: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - KinBeacon
+      targets:
+        - KinKitTests
+        - KinBeaconUITests
+    profile:
+      config: Release
+    archive:
+      config: Release
+
+  # Release-configuration launch measurements on a real device (`make perf`).
+  KinBeaconPerf:
+    build:
+      targets:
+        KinBeacon: all
+        KinBeaconUITests: [test]
+    test:
+      config: Release
+      targets:
+        - name: KinBeaconUITests
+          skippedTests: [ScreenshotTests, ParentFlowTests, ChildFlowTests, OnboardingTests]

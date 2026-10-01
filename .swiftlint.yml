@@ -1,0 +1,65 @@
+included:
+  - App
+  - Packages/KinKit/Sources
+  - Packages/KinKit/Tests
+  - UITests
+  - Extensions
+excluded:
+  - Packages/KinKit/.build
+  - DerivedData
+
+opt_in_rules:
+  - closure_spacing
+  - contains_over_first_not_nil
+  - empty_count
+  - fatal_error_message
+  - first_where
+  - implicit_return
+  - last_where
+  - redundant_nil_coalescing
+  - sorted_first_last
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+  - weak_delegate
+
+disabled_rules:
+  - trailing_comma          # swiftformat owns trailing commas
+  - todo
+  - opening_brace           # conflicts with swiftformat's wrapped-condition brace style
+
+identifier_name:
+  min_length: 1
+  max_length: 50
+  excluded: [id, x, y, i]
+
+type_name:
+  max_length: 50
+  excluded: [ID]
+
+line_length:
+  warning: 140
+  error: 200
+  ignores_comments: true
+  ignores_urls: true
+  ignores_interpolated_strings: true   # user-facing copy stays one localizable key
+
+file_length:
+  warning: 600
+  error: 900
+
+type_body_length:
+  warning: 350
+  error: 500
+
+function_body_length:
+  warning: 80
+  error: 120
+
+nesting:
+  type_level: 3
+
+large_tuple:
+  warning: 4
+
+cyclomatic_complexity:
+  ignores_case_statements: true  # exhaustive route/enum switches are flat, not complex

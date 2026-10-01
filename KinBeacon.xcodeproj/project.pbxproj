@@ -1,0 +1,1297 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0164993ADF21FA09D3694A90 /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = BF5CABE7A0760EF69AFF08B8 /* AppFeature */; };
+		05F7CEDE4B8BC1383CC7D3FE /* TestHostApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E39D99838E832ABB34D9B /* TestHostApp.swift */; };
+		0725DF46B73C6B10EC3A34CF /* KinShieldConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670317005F9A3DADF92D2FE0 /* KinShieldConfiguration.swift */; };
+		11167096E621D81CF8DD7A67 /* ScreenTimeShared in Frameworks */ = {isa = PBXBuildFile; productRef = E656FABD5663473C17E17490 /* ScreenTimeShared */; };
+		27DD402DF5A64AE808AA3FA0 /* KinKitTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 3D25A88BDA84AF0C90407849 /* KinKitTesting */; };
+		2AA91F0FF25E9A4E8291A06B /* DemoBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4B43C014EEFA636FD0B3 /* DemoBackendTests.swift */; };
+		33E51ADA26F4BC13C08D31CD /* DatabaseAndSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C435D795EF6B21DEB9A3182 /* DatabaseAndSyncTests.swift */; };
+		427559197470E9FB855C5229 /* ScreenTimeShared in Frameworks */ = {isa = PBXBuildFile; productRef = 27FB627A855CBA4AAA9B8104 /* ScreenTimeShared */; };
+		439B69481422C4B1AAE86F2C /* RoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28941175F0A98E8113087E3A /* RoutingTests.swift */; };
+		471F4BA6F85E209A4A5D29F5 /* KinReportExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30763CAE9772CD3A2D7BA /* KinReportExtension.swift */; };
+		4AB2BBD9FFDCB17A4A151B79 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179AA820C473AA109A032B51 /* CoreTests.swift */; };
+		4C522849D1553E6167FB9A0A /* KinBeaconShieldConfiguration.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 545581F0B8E0CB1147C5180E /* KinBeaconShieldConfiguration.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4FF80E280CA7A53BA19D2913 /* ScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46541109A63AA5DF0BDC952E /* ScheduleTests.swift */; };
+		500FDB605EB562468F5019ED /* LaunchPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68CE8226989A0CE43003027 /* LaunchPerformanceTests.swift */; };
+		59D32AC7426729C4DCF2F7E2 /* PlatformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E420FF87A67E0FC913085C8 /* PlatformTests.swift */; };
+		5E1A869D7376D6E27E5ADE31 /* KinBeaconMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FC4F1CCDD131CEC54DC48B6C /* KinBeaconMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		613F7359AC9658298695AFB8 /* FeatureModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12411275B17FA06F5B08F27 /* FeatureModelTests.swift */; };
+		75D636247109167384FA2AE2 /* PolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6FF7BE7397D483F8547623 /* PolicyTests.swift */; };
+		7E411F47D25151F9BFB828B5 /* KinBeaconReport.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 21BE47096C506B4BA2B4A5D6 /* KinBeaconReport.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8C21374152C6422E7174D59B /* KinBeaconApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310304F1E21D363B4BA45009 /* KinBeaconApp.swift */; };
+		8E1FC278F21313450F64F91E /* ScreenTimeShared in Frameworks */ = {isa = PBXBuildFile; productRef = E72481493898776B3898BDB8 /* ScreenTimeShared */; };
+		90E9372CCE6224DD51C32EA4 /* KinBeaconShieldAction.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 107A6599C90E6F00FECE58FA /* KinBeaconShieldAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9A552DAB0CF16849B74815FE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 16E47D42640BB6BD4087838E /* PrivacyInfo.xcprivacy */; };
+		9C7B39359B88789FBEB4F52C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947B30671F2AE96A076A1D63 /* Assets.xcassets */; };
+		AC718AC3E58C8D0BD0038027 /* NetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C9720398A9E0FAFEA7F8D /* NetworkingTests.swift */; };
+		ACCB0DE881F6FCFA94338197 /* ChildFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */; };
+		C995A39D532CA3227FC9E04E /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343CA75BA9E85F62A6CE3095 /* ScreenshotTests.swift */; };
+		CFFA1AF56565CD065BB28C16 /* KinBeaconUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */; };
+		D0633B9C23117C4D49988908 /* KinShieldAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE3A04292BD12EF674A92D4 /* KinShieldAction.swift */; };
+		D9C76EBD44ADD09AE7C837D3 /* KinActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D11E47BFF6CDF1603C8782 /* KinActivityMonitor.swift */; };
+		EB1400B0A18FF3837E9716A0 /* LocationPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66AC88DA8CCD48172EC13 /* LocationPolicyTests.swift */; };
+		F0CBAF74633DABB768F45903 /* ParentFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C658B5B1EB001472361F541B /* ParentFlowTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		268AEE4EBF8972E2673ED2E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5AF8CD0F5A4790EEEBBA6D2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A81887F16027A5A274906E50;
+			remoteInfo = KinBeaconMonitor;
+		};
+		94083349849F210D1180B169 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5AF8CD0F5A4790EEEBBA6D2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F449B6C283E63FD450605BC2;
+			remoteInfo = KinKitTestHost;
+		};
+		B7B847530819AEBF40E18A61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5AF8CD0F5A4790EEEBBA6D2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 195B002E18F7291469386E35;
+			remoteInfo = KinBeaconReport;
+		};
+		DCB90A350FC0BF558AF616EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5AF8CD0F5A4790EEEBBA6D2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8D47FB28391AD43BE1A12E2;
+			remoteInfo = KinBeaconShieldAction;
+		};
+		E4D80E08FF38B67410143956 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5AF8CD0F5A4790EEEBBA6D2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EACD7687D00DE73A2EBB15F2;
+			remoteInfo = KinBeacon;
+		};
+		F0FE940A8E6A7AF049411A30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5AF8CD0F5A4790EEEBBA6D2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1830F9037F884D20A144CC6B;
+			remoteInfo = KinBeaconShieldConfiguration;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2DAB9D0EB15B4ED359AC1061 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5E1A869D7376D6E27E5ADE31 /* KinBeaconMonitor.appex in Embed Foundation Extensions */,
+				4C522849D1553E6167FB9A0A /* KinBeaconShieldConfiguration.appex in Embed Foundation Extensions */,
+				90E9372CCE6224DD51C32EA4 /* KinBeaconShieldAction.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E3B95C0BCEBFC28E819FD73 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				7E411F47D25151F9BFB828B5 /* KinBeaconReport.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		107A6599C90E6F00FECE58FA /* KinBeaconShieldAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KinBeaconShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		14DACD19F9FF1F4CD65C406A /* ShieldConfiguration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldConfiguration.entitlements; sourceTree = "<group>"; };
+		16E47D42640BB6BD4087838E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		179AA820C473AA109A032B51 /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
+		21BE47096C506B4BA2B4A5D6 /* KinBeaconReport.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = KinBeaconReport.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		28941175F0A98E8113087E3A /* RoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingTests.swift; sourceTree = "<group>"; };
+		310304F1E21D363B4BA45009 /* KinBeaconApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinBeaconApp.swift; sourceTree = "<group>"; };
+		343CA75BA9E85F62A6CE3095 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
+		3927138338A87B67E36584CE /* KinBeaconUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KinBeaconUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		41D11E47BFF6CDF1603C8782 /* KinActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinActivityMonitor.swift; sourceTree = "<group>"; };
+		441D0598AC523F8CB89E1ADA /* KinKitTestHost.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KinKitTestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		46541109A63AA5DF0BDC952E /* ScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTests.swift; sourceTree = "<group>"; };
+		48E30763CAE9772CD3A2D7BA /* KinReportExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinReportExtension.swift; sourceTree = "<group>"; };
+		4E420FF87A67E0FC913085C8 /* PlatformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformTests.swift; sourceTree = "<group>"; };
+		4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildFlowTests.swift; sourceTree = "<group>"; };
+		51932D319444F40ECB094C4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		545581F0B8E0CB1147C5180E /* KinBeaconShieldConfiguration.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KinBeaconShieldConfiguration.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CB8EBCDE4627A2842F20C04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5F2E39D99838E832ABB34D9B /* TestHostApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHostApp.swift; sourceTree = "<group>"; };
+		652C9720398A9E0FAFEA7F8D /* NetworkingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingTests.swift; sourceTree = "<group>"; };
+		670317005F9A3DADF92D2FE0 /* KinShieldConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinShieldConfiguration.swift; sourceTree = "<group>"; };
+		6F590EBE6A17FB2BECAEB278 /* Report.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Report.entitlements; sourceTree = "<group>"; };
+		7BE3A04292BD12EF674A92D4 /* KinShieldAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinShieldAction.swift; sourceTree = "<group>"; };
+		90C4F0ECD2A180470AE073FC /* KinBeacon.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KinBeacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		931AE6BE004A6A38F5114855 /* Monitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Monitor.entitlements; sourceTree = "<group>"; };
+		947B30671F2AE96A076A1D63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		95305939F6F021D7DC09C29E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9C435D795EF6B21DEB9A3182 /* DatabaseAndSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAndSyncTests.swift; sourceTree = "<group>"; };
+		9D6FF7BE7397D483F8547623 /* PolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyTests.swift; sourceTree = "<group>"; };
+		B60E5545E1E292682D9A4A19 /* KinKitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KinKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0D4F8EA44B950CFC8F69A05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C658B5B1EB001472361F541B /* ParentFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentFlowTests.swift; sourceTree = "<group>"; };
+		C8694C90B95A059C3C912195 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		CBA66AC88DA8CCD48172EC13 /* LocationPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPolicyTests.swift; sourceTree = "<group>"; };
+		CD753EB0BD4A658DB7A20619 /* KinKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KinKit; path = Packages/KinKit; sourceTree = SOURCE_ROOT; };
+		D68CE8226989A0CE43003027 /* LaunchPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchPerformanceTests.swift; sourceTree = "<group>"; };
+		DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinBeaconUITestCase.swift; sourceTree = "<group>"; };
+		DBCD4B43C014EEFA636FD0B3 /* DemoBackendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoBackendTests.swift; sourceTree = "<group>"; };
+		E12411275B17FA06F5B08F27 /* FeatureModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureModelTests.swift; sourceTree = "<group>"; };
+		FC4F1CCDD131CEC54DC48B6C /* KinBeaconMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KinBeaconMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD05A589164DC1048776D6A8 /* ShieldAction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldAction.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		079F96AAD8041CE288A466BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E1FC278F21313450F64F91E /* ScreenTimeShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14D6D52EAFE796D4E3F0DB59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27DD402DF5A64AE808AA3FA0 /* KinKitTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6271DEF1111047E92626CA97 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0164993ADF21FA09D3694A90 /* AppFeature in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8405B01FF6DFEA303667E951 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				427559197470E9FB855C5229 /* ScreenTimeShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3FF3166A84285FBB94B2B9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11167096E621D81CF8DD7A67 /* ScreenTimeShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01C6B9F0A3E3554153C076B3 /* Monitor */ = {
+			isa = PBXGroup;
+			children = (
+				95305939F6F021D7DC09C29E /* Info.plist */,
+				41D11E47BFF6CDF1603C8782 /* KinActivityMonitor.swift */,
+				931AE6BE004A6A38F5114855 /* Monitor.entitlements */,
+			);
+			path = Monitor;
+			sourceTree = "<group>";
+		};
+		1893BF8B3FC89E524DCC8BA3 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				51932D319444F40ECB094C4E /* Info.plist */,
+				48E30763CAE9772CD3A2D7BA /* KinReportExtension.swift */,
+				6F590EBE6A17FB2BECAEB278 /* Report.entitlements */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		20942BFBEF463EFDB555EF3D /* FeatureTests */ = {
+			isa = PBXGroup;
+			children = (
+				E12411275B17FA06F5B08F27 /* FeatureModelTests.swift */,
+				28941175F0A98E8113087E3A /* RoutingTests.swift */,
+			);
+			path = FeatureTests;
+			sourceTree = "<group>";
+		};
+		283B02D34D68674D1E061931 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				52F9F9E4001FEE221FC248A1 /* KinKit */,
+				CD753EB0BD4A658DB7A20619 /* KinKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		2852D5907C3BB059C195B58C /* TestHost */ = {
+			isa = PBXGroup;
+			children = (
+				5F2E39D99838E832ABB34D9B /* TestHostApp.swift */,
+			);
+			path = TestHost;
+			sourceTree = "<group>";
+		};
+		28E3C6FB58B9B9EAC1CB8D83 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				947B30671F2AE96A076A1D63 /* Assets.xcassets */,
+				16E47D42640BB6BD4087838E /* PrivacyInfo.xcprivacy */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		37DD610B6733FB345F653A15 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				C8694C90B95A059C3C912195 /* Base.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		3909CBB7B97824F13706D8FB /* PlatformTests */ = {
+			isa = PBXGroup;
+			children = (
+				4E420FF87A67E0FC913085C8 /* PlatformTests.swift */,
+			);
+			path = PlatformTests;
+			sourceTree = "<group>";
+		};
+		52F9F9E4001FEE221FC248A1 /* KinKit */ = {
+			isa = PBXGroup;
+			children = (
+				F4C1C814C82F1BA59B8E6CE6 /* Tests */,
+			);
+			path = KinKit;
+			sourceTree = "<group>";
+		};
+		590C9D27CDEF5ABF7F762C0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				90C4F0ECD2A180470AE073FC /* KinBeacon.app */,
+				FC4F1CCDD131CEC54DC48B6C /* KinBeaconMonitor.appex */,
+				21BE47096C506B4BA2B4A5D6 /* KinBeaconReport.appex */,
+				107A6599C90E6F00FECE58FA /* KinBeaconShieldAction.appex */,
+				545581F0B8E0CB1147C5180E /* KinBeaconShieldConfiguration.appex */,
+				3927138338A87B67E36584CE /* KinBeaconUITests.xctest */,
+				441D0598AC523F8CB89E1ADA /* KinKitTestHost.app */,
+				B60E5545E1E292682D9A4A19 /* KinKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7A4A18293877EEBA9A4C75CC /* ShieldConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				C0D4F8EA44B950CFC8F69A05 /* Info.plist */,
+				670317005F9A3DADF92D2FE0 /* KinShieldConfiguration.swift */,
+				14DACD19F9FF1F4CD65C406A /* ShieldConfiguration.entitlements */,
+			);
+			path = ShieldConfiguration;
+			sourceTree = "<group>";
+		};
+		83BA0A5C1F0AB1C072BD2A46 /* DataTests */ = {
+			isa = PBXGroup;
+			children = (
+				9C435D795EF6B21DEB9A3182 /* DatabaseAndSyncTests.swift */,
+				DBCD4B43C014EEFA636FD0B3 /* DemoBackendTests.swift */,
+				652C9720398A9E0FAFEA7F8D /* NetworkingTests.swift */,
+			);
+			path = DataTests;
+			sourceTree = "<group>";
+		};
+		85FB4AAF9DB32937A5DF5F8F /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				310304F1E21D363B4BA45009 /* KinBeaconApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A92BA30D69C89EF8523D77CD /* ShieldAction */ = {
+			isa = PBXGroup;
+			children = (
+				5CB8EBCDE4627A2842F20C04 /* Info.plist */,
+				7BE3A04292BD12EF674A92D4 /* KinShieldAction.swift */,
+				FD05A589164DC1048776D6A8 /* ShieldAction.entitlements */,
+			);
+			path = ShieldAction;
+			sourceTree = "<group>";
+		};
+		CAC846C1C018E59A2D8120F2 = {
+			isa = PBXGroup;
+			children = (
+				DEA28192B822546B59FAE886 /* App */,
+				37DD610B6733FB345F653A15 /* Config */,
+				DAF2A1992FF94CCB2275A2FE /* Extensions */,
+				283B02D34D68674D1E061931 /* Packages */,
+				2852D5907C3BB059C195B58C /* TestHost */,
+				E1AB5032597142FB9BF480CC /* UITests */,
+				590C9D27CDEF5ABF7F762C0B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DAF2A1992FF94CCB2275A2FE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				01C6B9F0A3E3554153C076B3 /* Monitor */,
+				1893BF8B3FC89E524DCC8BA3 /* Report */,
+				A92BA30D69C89EF8523D77CD /* ShieldAction */,
+				7A4A18293877EEBA9A4C75CC /* ShieldConfiguration */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DEA28192B822546B59FAE886 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				28E3C6FB58B9B9EAC1CB8D83 /* Resources */,
+				85FB4AAF9DB32937A5DF5F8F /* Sources */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E1AB5032597142FB9BF480CC /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */,
+				DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */,
+				D68CE8226989A0CE43003027 /* LaunchPerformanceTests.swift */,
+				C658B5B1EB001472361F541B /* ParentFlowTests.swift */,
+				343CA75BA9E85F62A6CE3095 /* ScreenshotTests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		E26E67E545A0A18DA27AAC7C /* DomainTests */ = {
+			isa = PBXGroup;
+			children = (
+				179AA820C473AA109A032B51 /* CoreTests.swift */,
+				CBA66AC88DA8CCD48172EC13 /* LocationPolicyTests.swift */,
+				9D6FF7BE7397D483F8547623 /* PolicyTests.swift */,
+				46541109A63AA5DF0BDC952E /* ScheduleTests.swift */,
+			);
+			path = DomainTests;
+			sourceTree = "<group>";
+		};
+		F4C1C814C82F1BA59B8E6CE6 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				83BA0A5C1F0AB1C072BD2A46 /* DataTests */,
+				E26E67E545A0A18DA27AAC7C /* DomainTests */,
+				20942BFBEF463EFDB555EF3D /* FeatureTests */,
+				3909CBB7B97824F13706D8FB /* PlatformTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04A5F69B47E4837DB8B1B6EE /* KinBeaconUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C8C74BA0CB48F0545E246A5 /* Build configuration list for PBXNativeTarget "KinBeaconUITests" */;
+			buildPhases = (
+				1DF8E65FFC44A6E246BEA4C1 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D8C3FFD37F21D9597909013C /* PBXTargetDependency */,
+			);
+			name = KinBeaconUITests;
+			packageProductDependencies = (
+			);
+			productName = KinBeaconUITests;
+			productReference = 3927138338A87B67E36584CE /* KinBeaconUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		1830F9037F884D20A144CC6B /* KinBeaconShieldConfiguration */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D87807E9B64627E5D7D9DDB /* Build configuration list for PBXNativeTarget "KinBeaconShieldConfiguration" */;
+			buildPhases = (
+				8A0851C50F01239C95AFDCEE /* Sources */,
+				8405B01FF6DFEA303667E951 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KinBeaconShieldConfiguration;
+			packageProductDependencies = (
+				27FB627A855CBA4AAA9B8104 /* ScreenTimeShared */,
+			);
+			productName = KinBeaconShieldConfiguration;
+			productReference = 545581F0B8E0CB1147C5180E /* KinBeaconShieldConfiguration.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		195B002E18F7291469386E35 /* KinBeaconReport */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B060B3DA6A278FD133D0625E /* Build configuration list for PBXNativeTarget "KinBeaconReport" */;
+			buildPhases = (
+				C3642532F33676BA5D8C36D0 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KinBeaconReport;
+			packageProductDependencies = (
+			);
+			productName = KinBeaconReport;
+			productReference = 21BE47096C506B4BA2B4A5D6 /* KinBeaconReport.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
+		1DC232397F85AFEFCABFC889 /* KinKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5318D2600CF88F3579196588 /* Build configuration list for PBXNativeTarget "KinKitTests" */;
+			buildPhases = (
+				43F2BA411DFDB203CCF88957 /* Sources */,
+				14D6D52EAFE796D4E3F0DB59 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B9EFF9FEA9DF2970119227D2 /* PBXTargetDependency */,
+			);
+			name = KinKitTests;
+			packageProductDependencies = (
+				3D25A88BDA84AF0C90407849 /* KinKitTesting */,
+			);
+			productName = KinKitTests;
+			productReference = B60E5545E1E292682D9A4A19 /* KinKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A81887F16027A5A274906E50 /* KinBeaconMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56B4D7079905A3639D26AC63 /* Build configuration list for PBXNativeTarget "KinBeaconMonitor" */;
+			buildPhases = (
+				11EC737DECB7AF14EE384025 /* Sources */,
+				079F96AAD8041CE288A466BE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KinBeaconMonitor;
+			packageProductDependencies = (
+				E72481493898776B3898BDB8 /* ScreenTimeShared */,
+			);
+			productName = KinBeaconMonitor;
+			productReference = FC4F1CCDD131CEC54DC48B6C /* KinBeaconMonitor.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		EACD7687D00DE73A2EBB15F2 /* KinBeacon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FCA05FEB757C9070FF2FDECC /* Build configuration list for PBXNativeTarget "KinBeacon" */;
+			buildPhases = (
+				F73D6B48BC3352C1ABC6B130 /* Sources */,
+				A01593F563D5DBAB011B6366 /* Resources */,
+				6271DEF1111047E92626CA97 /* Frameworks */,
+				2DAB9D0EB15B4ED359AC1061 /* Embed Foundation Extensions */,
+				4E3B95C0BCEBFC28E819FD73 /* Embed ExtensionKit Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E2ED7D893CF81D97ABCE3182 /* PBXTargetDependency */,
+				43A6BA7821E6B6F0FC72DF0C /* PBXTargetDependency */,
+				AD72C734A1EC5FF313FECA2E /* PBXTargetDependency */,
+				36228355DF3F0D2FE835A1A0 /* PBXTargetDependency */,
+			);
+			name = KinBeacon;
+			packageProductDependencies = (
+				BF5CABE7A0760EF69AFF08B8 /* AppFeature */,
+			);
+			productName = KinBeacon;
+			productReference = 90C4F0ECD2A180470AE073FC /* KinBeacon.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F449B6C283E63FD450605BC2 /* KinKitTestHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B58476985914D5D8F638E856 /* Build configuration list for PBXNativeTarget "KinKitTestHost" */;
+			buildPhases = (
+				4CA51DA819677602C839EB84 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KinKitTestHost;
+			packageProductDependencies = (
+			);
+			productName = KinKitTestHost;
+			productReference = 441D0598AC523F8CB89E1ADA /* KinKitTestHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F8D47FB28391AD43BE1A12E2 /* KinBeaconShieldAction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C8097EED1A67785C511AA7D /* Build configuration list for PBXNativeTarget "KinBeaconShieldAction" */;
+			buildPhases = (
+				08AC69A9C8799AC34C8D9CA3 /* Sources */,
+				D3FF3166A84285FBB94B2B9F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KinBeaconShieldAction;
+			packageProductDependencies = (
+				E656FABD5663473C17E17490 /* ScreenTimeShared */,
+			);
+			productName = KinBeaconShieldAction;
+			productReference = 107A6599C90E6F00FECE58FA /* KinBeaconShieldAction.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5AF8CD0F5A4790EEEBBA6D2E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					04A5F69B47E4837DB8B1B6EE = {
+						DevelopmentTeam = 6VC84T9283;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EACD7687D00DE73A2EBB15F2;
+					};
+					1830F9037F884D20A144CC6B = {
+						DevelopmentTeam = 6VC84T9283;
+						ProvisioningStyle = Automatic;
+					};
+					195B002E18F7291469386E35 = {
+						DevelopmentTeam = 6VC84T9283;
+						ProvisioningStyle = Automatic;
+					};
+					1DC232397F85AFEFCABFC889 = {
+						DevelopmentTeam = 6VC84T9283;
+						ProvisioningStyle = Automatic;
+					};
+					A81887F16027A5A274906E50 = {
+						DevelopmentTeam = 6VC84T9283;
+						ProvisioningStyle = Automatic;
+					};
+					EACD7687D00DE73A2EBB15F2 = {
+						DevelopmentTeam = 6VC84T9283;
+						ProvisioningStyle = Automatic;
+					};
+					F449B6C283E63FD450605BC2 = {
+						DevelopmentTeam = 6VC84T9283;
+						ProvisioningStyle = Automatic;
+					};
+					F8D47FB28391AD43BE1A12E2 = {
+						DevelopmentTeam = 6VC84T9283;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 9A1122939B98349F672958F3 /* Build configuration list for PBXProject "KinBeacon" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CAC846C1C018E59A2D8120F2;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0E1D5C90BB19293DABE3CA4D /* XCLocalSwiftPackageReference "Packages/KinKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EACD7687D00DE73A2EBB15F2 /* KinBeacon */,
+				A81887F16027A5A274906E50 /* KinBeaconMonitor */,
+				195B002E18F7291469386E35 /* KinBeaconReport */,
+				F8D47FB28391AD43BE1A12E2 /* KinBeaconShieldAction */,
+				1830F9037F884D20A144CC6B /* KinBeaconShieldConfiguration */,
+				04A5F69B47E4837DB8B1B6EE /* KinBeaconUITests */,
+				F449B6C283E63FD450605BC2 /* KinKitTestHost */,
+				1DC232397F85AFEFCABFC889 /* KinKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A01593F563D5DBAB011B6366 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C7B39359B88789FBEB4F52C /* Assets.xcassets in Resources */,
+				9A552DAB0CF16849B74815FE /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		08AC69A9C8799AC34C8D9CA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0633B9C23117C4D49988908 /* KinShieldAction.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		11EC737DECB7AF14EE384025 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9C76EBD44ADD09AE7C837D3 /* KinActivityMonitor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1DF8E65FFC44A6E246BEA4C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACCB0DE881F6FCFA94338197 /* ChildFlowTests.swift in Sources */,
+				CFFA1AF56565CD065BB28C16 /* KinBeaconUITestCase.swift in Sources */,
+				500FDB605EB562468F5019ED /* LaunchPerformanceTests.swift in Sources */,
+				F0CBAF74633DABB768F45903 /* ParentFlowTests.swift in Sources */,
+				C995A39D532CA3227FC9E04E /* ScreenshotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43F2BA411DFDB203CCF88957 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AB2BBD9FFDCB17A4A151B79 /* CoreTests.swift in Sources */,
+				33E51ADA26F4BC13C08D31CD /* DatabaseAndSyncTests.swift in Sources */,
+				2AA91F0FF25E9A4E8291A06B /* DemoBackendTests.swift in Sources */,
+				613F7359AC9658298695AFB8 /* FeatureModelTests.swift in Sources */,
+				EB1400B0A18FF3837E9716A0 /* LocationPolicyTests.swift in Sources */,
+				AC718AC3E58C8D0BD0038027 /* NetworkingTests.swift in Sources */,
+				59D32AC7426729C4DCF2F7E2 /* PlatformTests.swift in Sources */,
+				75D636247109167384FA2AE2 /* PolicyTests.swift in Sources */,
+				439B69481422C4B1AAE86F2C /* RoutingTests.swift in Sources */,
+				4FF80E280CA7A53BA19D2913 /* ScheduleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CA51DA819677602C839EB84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05F7CEDE4B8BC1383CC7D3FE /* TestHostApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A0851C50F01239C95AFDCEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0725DF46B73C6B10EC3A34CF /* KinShieldConfiguration.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3642532F33676BA5D8C36D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				471F4BA6F85E209A4A5D29F5 /* KinReportExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F73D6B48BC3352C1ABC6B130 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C21374152C6422E7174D59B /* KinBeaconApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		36228355DF3F0D2FE835A1A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 195B002E18F7291469386E35 /* KinBeaconReport */;
+			targetProxy = B7B847530819AEBF40E18A61 /* PBXContainerItemProxy */;
+		};
+		43A6BA7821E6B6F0FC72DF0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1830F9037F884D20A144CC6B /* KinBeaconShieldConfiguration */;
+			targetProxy = F0FE940A8E6A7AF049411A30 /* PBXContainerItemProxy */;
+		};
+		AD72C734A1EC5FF313FECA2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8D47FB28391AD43BE1A12E2 /* KinBeaconShieldAction */;
+			targetProxy = DCB90A350FC0BF558AF616EC /* PBXContainerItemProxy */;
+		};
+		B9EFF9FEA9DF2970119227D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F449B6C283E63FD450605BC2 /* KinKitTestHost */;
+			targetProxy = 94083349849F210D1180B169 /* PBXContainerItemProxy */;
+		};
+		D8C3FFD37F21D9597909013C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EACD7687D00DE73A2EBB15F2 /* KinBeacon */;
+			targetProxy = E4D80E08FF38B67410143956 /* PBXContainerItemProxy */;
+		};
+		E2ED7D893CF81D97ABCE3182 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A81887F16027A5A274906E50 /* KinBeaconMonitor */;
+			targetProxy = 268AEE4EBF8972E2673ED2E5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		018A943FAABDE924C3127A90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.tests;
+				SDKROOT = iphoneos;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KinKitTestHost.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KinKitTestHost";
+			};
+			name = Release;
+		};
+		09854B74847E26FE3864A0F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8694C90B95A059C3C912195 /* Base.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0DFA7E59FA78E255813AF03B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Extensions/Report/Report.entitlements;
+				INFOPLIST_FILE = Extensions/Report/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.report;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		122BECAE92077CE5707E68D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = KinBeacon;
+			};
+			name = Debug;
+		};
+		33CC33C4937E6995783BF8D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/KinBeacon.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		442EB68D2EA538AC974E401E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.tests;
+				SDKROOT = iphoneos;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KinKitTestHost.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KinKitTestHost";
+			};
+			name = Debug;
+		};
+		4672DF999F71781959D59162 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Extensions/Report/Report.entitlements;
+				INFOPLIST_FILE = Extensions/Report/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.report;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		49B9F3F39F2F1EB0CBD54BB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Extensions/Monitor/Monitor.entitlements;
+				INFOPLIST_FILE = Extensions/Monitor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.monitor;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		55AE4B2512EC502419D42EC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Extensions/ShieldConfiguration/ShieldConfiguration.entitlements;
+				INFOPLIST_FILE = Extensions/ShieldConfiguration/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.shieldconfiguration;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6D80DB018A60E55467512075 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = KinBeacon;
+			};
+			name = Release;
+		};
+		7D4B1A1D977EF307416CE33B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/KinBeacon.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7F8D83CB227E3142E72802CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8694C90B95A059C3C912195 /* Base.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B075CA272E84831AB43DF689 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.testhost;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B49297AA9A417819E37D0943 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.testhost;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C172E103BD5B4A950B25D96F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Extensions/Monitor/Monitor.entitlements;
+				INFOPLIST_FILE = Extensions/Monitor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.monitor;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DF584B1DBB5EB193C53B05C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Extensions/ShieldConfiguration/ShieldConfiguration.entitlements;
+				INFOPLIST_FILE = Extensions/ShieldConfiguration/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.shieldconfiguration;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E6F9AA1B786DD8267C9CDB23 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Extensions/ShieldAction/ShieldAction.entitlements;
+				INFOPLIST_FILE = Extensions/ShieldAction/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.shieldaction;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F6D255A14B7AF73BE9EA81D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Extensions/ShieldAction/ShieldAction.entitlements;
+				INFOPLIST_FILE = Extensions/ShieldAction/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lynkto.kinbeacon.shieldaction;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D87807E9B64627E5D7D9DDB /* Build configuration list for PBXNativeTarget "KinBeaconShieldConfiguration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF584B1DBB5EB193C53B05C4 /* Debug */,
+				55AE4B2512EC502419D42EC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3C8097EED1A67785C511AA7D /* Build configuration list for PBXNativeTarget "KinBeaconShieldAction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6D255A14B7AF73BE9EA81D7 /* Debug */,
+				E6F9AA1B786DD8267C9CDB23 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4C8C74BA0CB48F0545E246A5 /* Build configuration list for PBXNativeTarget "KinBeaconUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				122BECAE92077CE5707E68D1 /* Debug */,
+				6D80DB018A60E55467512075 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5318D2600CF88F3579196588 /* Build configuration list for PBXNativeTarget "KinKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				442EB68D2EA538AC974E401E /* Debug */,
+				018A943FAABDE924C3127A90 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		56B4D7079905A3639D26AC63 /* Build configuration list for PBXNativeTarget "KinBeaconMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C172E103BD5B4A950B25D96F /* Debug */,
+				49B9F3F39F2F1EB0CBD54BB6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9A1122939B98349F672958F3 /* Build configuration list for PBXProject "KinBeacon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F8D83CB227E3142E72802CA /* Debug */,
+				09854B74847E26FE3864A0F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B060B3DA6A278FD133D0625E /* Build configuration list for PBXNativeTarget "KinBeaconReport" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4672DF999F71781959D59162 /* Debug */,
+				0DFA7E59FA78E255813AF03B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B58476985914D5D8F638E856 /* Build configuration list for PBXNativeTarget "KinKitTestHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B075CA272E84831AB43DF689 /* Debug */,
+				B49297AA9A417819E37D0943 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FCA05FEB757C9070FF2FDECC /* Build configuration list for PBXNativeTarget "KinBeacon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D4B1A1D977EF307416CE33B /* Debug */,
+				33CC33C4937E6995783BF8D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0E1D5C90BB19293DABE3CA4D /* XCLocalSwiftPackageReference "Packages/KinKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/KinKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		27FB627A855CBA4AAA9B8104 /* ScreenTimeShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScreenTimeShared;
+		};
+		3D25A88BDA84AF0C90407849 /* KinKitTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KinKitTesting;
+		};
+		BF5CABE7A0760EF69AFF08B8 /* AppFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppFeature;
+		};
+		E656FABD5663473C17E17490 /* ScreenTimeShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScreenTimeShared;
+		};
+		E72481493898776B3898BDB8 /* ScreenTimeShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScreenTimeShared;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5AF8CD0F5A4790EEEBBA6D2E /* Project object */;
+}

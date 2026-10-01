@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v5
+      - run: brew install swiftlint swiftformat
+      - run: swiftlint lint --strict --reporter github-actions-logging
+      - run: swiftformat --lint .
+
+  test:
+    name: Unit + UI tests (simulator)
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - run: brew install xcodegen xcbeautify
+      - name: Generate project
+        run: xcodegen generate
+      # No physical device on CI: the same tests run on a hosted simulator (FamilyControls/CoreLocation are
+      # replaced by their simulated adapters there, exactly as in local simulator runs).
+      - name: Test
+        run: |
+          set -o pipefail
+          xcodebuild test -project KinBeacon.xcodeproj -scheme KinBeacon \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -skip-testing:KinBeaconUITests/LaunchPerformanceTests \
+            -derivedDataPath DerivedData -resultBundlePath build/tests.xcresult \
+            CODE_SIGNING_ALLOWED=NO | xcbeautify --renderer github-actions
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: build/tests.xcresult
+
+  release-build:
+    name: Release build (warnings as errors)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - run: brew install xcodegen xcbeautify
+      - run: xcodegen generate
+      - name: Build Release
+        run: |
+          set -o pipefail
+          xcodebuild build -project KinBeacon.xcodeproj -scheme KinBeacon -configuration Release \
+            -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO | xcbeautify --renderer github-actions

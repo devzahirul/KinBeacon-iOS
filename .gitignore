@@ -1,0 +1,14 @@
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xcresult
+# SwiftPM
+Packages/KinKit/.build/
+Packages/KinKit/.swiftpm/
+.swiftpm/
+# macOS
+.DS_Store
+# Local, never committed (API base URL, push keys)
+Config/Local.xcconfig
