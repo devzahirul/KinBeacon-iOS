@@ -87,15 +87,20 @@ public final class AppContainer {
         !Self.isSimulator && !options.isRunningTests && !options.fastSimulation
     }
 
-    /// One CoreLocation stack per process, shared by onboarding and every runtime (role switches rebuild runtimes,
-    /// but CLLocationManager / CLMonitor must not be duplicated).
+    /// CoreLocation also works in the Simulator (driven by `xcrun simctl location`), so live families use it there
+    /// too; only FamilyControls needs real hardware.
+    var usesRealLocation: Bool {
+        !options.isRunningTests && !options.fastSimulation && (!Self.isSimulator || !settings.isDemo)
+    }
+
+    /// One CoreLocation stack per process, shared by every runtime (role switches rebuild runtimes, but
+    /// CLLocationManager / CLMonitor must not be duplicated).
     var locationTracker: any LocationTracking {
+        guard usesRealLocation else { return SimulatedLocationTracker(start: DemoData.school.coordinate) }
         if let cachedLocationTracker {
             return cachedLocationTracker
         }
-        let tracker: any LocationTracking = usesRealPlatformServices
-            ? LiveLocationTracker()
-            : SimulatedLocationTracker(start: DemoData.school.coordinate)
+        let tracker = LiveLocationTracker()
         cachedLocationTracker = tracker
         return tracker
     }
@@ -145,9 +150,13 @@ public final class AppContainer {
 
     /// Onboarding needs real permission prompts before a runtime exists.
     func onboardingPermissions() -> any PermissionsProviding {
-        guard usesRealPlatformServices else { return SimulatedPermissionsProvider() }
+        guard !options.isRunningTests, !options.fastSimulation else { return SimulatedPermissionsProvider() }
         #if os(iOS)
-            return LivePermissionsProvider(location: locationTracker, screenTime: LiveScreenTimeController { ("", "") })
+            // Real location / notification prompts everywhere; Screen Time only exists on hardware.
+            let screenTime: any ScreenTimeControlling = Self.isSimulator
+                ? SimulatedScreenTimeController()
+                : LiveScreenTimeController { ("", "") }
+            return LivePermissionsProvider(location: LiveLocationTracker(), screenTime: screenTime)
         #else
             return SimulatedPermissionsProvider()
         #endif
@@ -215,7 +224,7 @@ public final class AppContainer {
         case .parent:
             let backend: any ParentBackend = live ?? DemoBackend(configuration: demoConfiguration(.parent))
             // Live parents share their own location with the family (uploaded directly; parents' phones are online).
-            let location: (any LocationTracking)? = live != nil && usesRealPlatformServices ? locationTracker : nil
+            let location: (any LocationTracking)? = live != nil && usesRealLocation ? locationTracker : nil
             return .parent(ParentRuntime(
                 backend: backend,
                 account: live,
@@ -242,10 +251,10 @@ public final class AppContainer {
         let location: any LocationTracking
         let screenTime: any ScreenTimeControlling
         let permissions: any PermissionsProviding
-        if usesRealPlatformServices {
+        if usesRealPlatformServices || usesRealLocation {
             location = locationTracker
-            // Live families always enforce; the demo only enforces if the user opted in (never by surprise).
-            screenTime = live != nil || settings.liveScreenTime
+            // Live families always enforce on hardware; the demo only enforces if the user opted in (never by surprise).
+            screenTime = usesRealPlatformServices && (live != nil || settings.liveScreenTime)
                 ? LiveScreenTimeController(policyStore: policyStore) { [familyName = settings.familyName] in ("", familyName) }
                 : SimulatedScreenTimeController(policyStore: policyStore)
             #if os(iOS)

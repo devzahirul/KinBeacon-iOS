@@ -3,6 +3,7 @@
     import CoreLocation
     import KinCore
     import os
+    import UIKit
 
     /// CoreLocation adapter built on the iOS 17 async APIs.
     ///
@@ -140,6 +141,13 @@
 
         override init() {
             super.init()
+            // The user dismissed a prompt (any answer) → the app becomes active again.
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(applicationDidBecomeActive),
+                name: UIApplication.didBecomeActiveNotification,
+                object: nil
+            )
             manager.delegate = self
             manager.pausesLocationUpdatesAutomatically = true
             manager.activityType = .otherNavigation
@@ -168,6 +176,15 @@
                 } else {
                     manager.requestWhenInUseAuthorization()
                 }
+                // iOS shows each location prompt at most once and does NOT call the delegate when it skips one (e.g. the
+                // "Always" upgrade was already answered). A visible prompt makes the app inactive; if we're still active
+                // shortly after asking, no prompt is coming — answer with the current status instead of waiting forever.
+                Task { @MainActor [weak self] in
+                    try? await Task.sleep(for: .seconds(1.5))
+                    if UIApplication.shared.applicationState == .active {
+                        self?.resumeWaiters()
+                    }
+                }
             }
         }
 
@@ -190,6 +207,19 @@
         func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
             // The callback also fires once right after the delegate is set; only resume when the user actually answered.
             guard manager.authorizationStatus != .notDetermined || authorizationWaiters.isEmpty else { return }
+            resumeWaiters()
+        }
+
+        @objc private func applicationDidBecomeActive() {
+            guard !authorizationWaiters.isEmpty else { return }
+            // Give CoreLocation a beat to publish the new status before reading it.
+            Task { @MainActor [weak self] in
+                try? await Task.sleep(for: .milliseconds(300))
+                self?.resumeWaiters()
+            }
+        }
+
+        private func resumeWaiters() {
             let value = authorization
             let waiters = authorizationWaiters
             authorizationWaiters.removeAll()

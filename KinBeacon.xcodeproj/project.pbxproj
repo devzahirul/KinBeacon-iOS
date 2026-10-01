@@ -13,6 +13,7 @@
 		11167096E621D81CF8DD7A67 /* ScreenTimeShared in Frameworks */ = {isa = PBXBuildFile; productRef = E656FABD5663473C17E17490 /* ScreenTimeShared */; };
 		27DD402DF5A64AE808AA3FA0 /* KinKitTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 3D25A88BDA84AF0C90407849 /* KinKitTesting */; };
 		2AA91F0FF25E9A4E8291A06B /* DemoBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4B43C014EEFA636FD0B3 /* DemoBackendTests.swift */; };
+		30313733839C6667A0F507B3 /* FamilySetupUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EEB05E4B977C2566A7B372 /* FamilySetupUITests.swift */; };
 		334448803D4D3AD3E3A0B49E /* LiveAccountUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1DC3531F66057F04552F2B /* LiveAccountUITests.swift */; };
 		33E51ADA26F4BC13C08D31CD /* DatabaseAndSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C435D795EF6B21DEB9A3182 /* DatabaseAndSyncTests.swift */; };
 		427559197470E9FB855C5229 /* ScreenTimeShared in Frameworks */ = {isa = PBXBuildFile; productRef = 27FB627A855CBA4AAA9B8104 /* ScreenTimeShared */; };
@@ -157,6 +158,7 @@
 		95305939F6F021D7DC09C29E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9C435D795EF6B21DEB9A3182 /* DatabaseAndSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAndSyncTests.swift; sourceTree = "<group>"; };
 		9D6FF7BE7397D483F8547623 /* PolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyTests.swift; sourceTree = "<group>"; };
+		A5EEB05E4B977C2566A7B372 /* FamilySetupUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilySetupUITests.swift; sourceTree = "<group>"; };
 		B60E5545E1E292682D9A4A19 /* KinKitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KinKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C042E11A1407F48F2622F18D /* GeofenceMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceMonitorTests.swift; sourceTree = "<group>"; };
 		C0D4F8EA44B950CFC8F69A05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */,
+				A5EEB05E4B977C2566A7B372 /* FamilySetupUITests.swift */,
 				2F08466B87CE2EE93904403D /* Info.plist */,
 				DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */,
 				D68CE8226989A0CE43003027 /* LaunchPerformanceTests.swift */,
@@ -690,6 +693,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACCB0DE881F6FCFA94338197 /* ChildFlowTests.swift in Sources */,
+				30313733839C6667A0F507B3 /* FamilySetupUITests.swift in Sources */,
 				CFFA1AF56565CD065BB28C16 /* KinBeaconUITestCase.swift in Sources */,
 				500FDB605EB562468F5019ED /* LaunchPerformanceTests.swift in Sources */,
 				334448803D4D3AD3E3A0B49E /* LiveAccountUITests.swift in Sources */,
