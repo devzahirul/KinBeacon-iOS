@@ -12,3 +12,4 @@ Packages/KinKit/.swiftpm/
 .DS_Store
 # Local, never committed (API base URL, push keys)
 Config/Local.xcconfig
+Config/Supabase.local.xcconfig

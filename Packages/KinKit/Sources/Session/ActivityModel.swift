@@ -53,6 +53,10 @@ public final class ActivityModel {
             visits = await range == .day ? (try? service.visits(for: member, on: self.anchor)) ?? [] : []
         } catch is CancellationError {
             // Superseded by a newer load.
+        } catch KinError.privateToScreenTime {
+            // Live families: usage comes from Apple's report view; places still come from our backend.
+            phase = .failed(.privateToScreenTime)
+            visits = await range == .day ? (try? service.visits(for: member, on: self.anchor)) ?? [] : []
         } catch {
             phase = .failed(error as? KinError ?? .server(status: 0))
         }

@@ -6,24 +6,51 @@ import ScreenTimeKit
 import SwiftUI
 
 enum AppPickers {
-    static func factories(live: Bool) -> ViewFactories {
+    enum Context { case demo, parentLive, childLive }
+
+    static func factories(_ context: Context) -> ViewFactories {
         var report: (@MainActor @Sendable () -> AnyView)?
         #if canImport(DeviceActivity) && os(iOS)
-            if live {
-                report = { AnyView(SystemUsageReport()) }
+            switch context {
+            case .parentLive: report = { AnyView(SystemUsageReport(children: true)) }
+            case .childLive: report = { AnyView(SystemUsageReport()) }
+            case .demo: report = nil
             }
         #endif
         return ViewFactories(
             appPicker: { selection in
-                #if canImport(FamilyControls) && os(iOS)
-                    if live {
+                switch context {
+                case .demo:
+                    return AnyView(DemoAppPicker(selection: selection))
+                case .parentLive:
+                    return AnyView(ChildDeviceAppsNotice())
+                case .childLive:
+                    #if canImport(FamilyControls) && os(iOS)
                         return AnyView(SystemAppPicker(selection: selection))
-                    }
-                #endif
-                return AnyView(DemoAppPicker(selection: selection))
+                    #else
+                        return AnyView(DemoAppPicker(selection: selection))
+                    #endif
+                }
             },
             usageReport: report
         )
+    }
+}
+
+/// Apple's app identities (`ApplicationToken`) are encrypted per device, so a selection made on the parent's iPhone
+/// can't be enforced on the child's. The allow-list is therefore chosen on the child's device.
+struct ChildDeviceAppsNotice: View {
+    var body: some View {
+        ContentUnavailableView {
+            Label("Choose apps on your child’s iPhone", systemImage: "iphone.and.arrow.forward")
+        } description: {
+            Text(
+                """
+                For privacy, Apple keeps each device’s app list on that device. On your child’s iPhone \
+                open KinBeacon › Settings › Apps allowed during School Mode and pick them together.
+                """
+            )
+        }
     }
 }
 
@@ -53,24 +80,5 @@ struct DemoAppPicker: View {
             .accessibilityAddTraits(isOn ? .isSelected : [])
         }
         .sensoryFeedback(.selection, trigger: selection)
-    }
-}
-
-/// Onboarding before a runtime exists: real prompts on device, no-ops in the simulator/tests.
-struct OnboardingPermissions: PermissionsProviding {
-    func currentReport() async -> PermissionHealthReport {
-        .healthy
-    }
-
-    func request(_ kind: PermissionKind) async -> PermissionState {
-        guard !AppContainer.isSimulator else { return .granted }
-        switch kind {
-        case .notifications:
-            let granted = await LocalNotificationPresenterBridge.requestAuthorization()
-            return granted ? .granted : .denied
-        default:
-            // Location & Screen Time prompts are requested by the child runtime's providers, in context.
-            return .notDetermined
-        }
     }
 }

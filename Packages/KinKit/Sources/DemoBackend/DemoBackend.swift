@@ -439,6 +439,10 @@ extension DemoBackend: CompanionService {
         []
     }
 
+    public func places() async throws -> [Place] {
+        snapshot.places
+    }
+
     public func upload(locations: [LocationSample]) async throws {
         guard let latest = locations.max(by: { $0.timestamp < $1.timestamp }),
               var status = snapshot.statuses[DemoData.emmaID] else { return }
@@ -487,6 +491,37 @@ extension DemoBackend: CompanionService {
 
     public func report(battery: BatteryState) async throws {
         snapshot.statuses[DemoData.emmaID]?.battery = battery
+        publish()
+    }
+}
+
+// MARK: - PlaceService
+
+extension DemoBackend: PlaceService {
+    public func save(_ place: Place) async throws {
+        snapshot.places.removeAll { $0.id == place.id }
+        snapshot.places.append(place)
+        publish()
+    }
+
+    public func deletePlace(_ id: PlaceID) async throws {
+        snapshot.places.removeAll { $0.id == id }
+        publish()
+    }
+}
+
+// MARK: - FamilyAdminService
+
+extension DemoBackend: FamilyAdminService {
+    public func removeChild(_ id: MemberID) async throws {
+        guard snapshot.member(id)?.role == .child else { throw KinError.unauthorized }
+        snapshot.members.removeAll { $0.id == id }
+        snapshot.statuses[id] = nil
+        snapshot.activeModes[id] = nil
+        snapshot.openAlerts.removeAll { $0.memberID == id }
+        controlsByChild[id] = nil
+        activityByMember[id] = nil
+        requests.removeAll { $0.childID == id }
         publish()
     }
 }

@@ -35,7 +35,10 @@ final class OnboardingTests: KinBeaconUITestCase {
         launch(role: nil)
         app.buttons["onboarding.parent"].tap()
         app.buttons["onboarding.continue"].tap()
-        app.buttons["Not now"].tap()
+        for _ in 0 ..< 2 { // location, notifications
+            XCTAssertTrue(app.buttons["Not now"].waitForExistence(timeout: 5))
+            app.buttons["Not now"].tap()
+        }
         XCTAssertTrue(app.buttons["map.details"].waitForExistence(timeout: 10))
     }
 

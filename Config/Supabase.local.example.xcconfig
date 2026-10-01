@@ -1,0 +1,8 @@
+// Copy to Config/Supabase.local.xcconfig (git-ignored) and fill in from
+// Supabase Dashboard → Project Settings → API. Without it the app offers the on-device demo only.
+//
+// Host only — no "https://" (xcconfig treats "//" as a comment).
+SUPABASE_HOST = your-project-ref.supabase.co
+// The *publishable* (anon) key. It is designed to ship in apps; Row Level Security protects the data.
+// NEVER put the secret / service_role key here.
+SUPABASE_PUBLISHABLE_KEY = sb_publishable_xxxxxxxxxxxxxxxx

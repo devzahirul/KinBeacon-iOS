@@ -13,12 +13,14 @@
 		11167096E621D81CF8DD7A67 /* ScreenTimeShared in Frameworks */ = {isa = PBXBuildFile; productRef = E656FABD5663473C17E17490 /* ScreenTimeShared */; };
 		27DD402DF5A64AE808AA3FA0 /* KinKitTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 3D25A88BDA84AF0C90407849 /* KinKitTesting */; };
 		2AA91F0FF25E9A4E8291A06B /* DemoBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCD4B43C014EEFA636FD0B3 /* DemoBackendTests.swift */; };
+		334448803D4D3AD3E3A0B49E /* LiveAccountUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1DC3531F66057F04552F2B /* LiveAccountUITests.swift */; };
 		33E51ADA26F4BC13C08D31CD /* DatabaseAndSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C435D795EF6B21DEB9A3182 /* DatabaseAndSyncTests.swift */; };
 		427559197470E9FB855C5229 /* ScreenTimeShared in Frameworks */ = {isa = PBXBuildFile; productRef = 27FB627A855CBA4AAA9B8104 /* ScreenTimeShared */; };
 		439B69481422C4B1AAE86F2C /* RoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28941175F0A98E8113087E3A /* RoutingTests.swift */; };
 		471F4BA6F85E209A4A5D29F5 /* KinReportExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30763CAE9772CD3A2D7BA /* KinReportExtension.swift */; };
 		4AB2BBD9FFDCB17A4A151B79 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179AA820C473AA109A032B51 /* CoreTests.swift */; };
 		4C522849D1553E6167FB9A0A /* KinBeaconShieldConfiguration.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 545581F0B8E0CB1147C5180E /* KinBeaconShieldConfiguration.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4C71D701957C30C243B0E9F1 /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11137D37CF125A089E841592 /* AccountTests.swift */; };
 		4FF80E280CA7A53BA19D2913 /* ScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46541109A63AA5DF0BDC952E /* ScheduleTests.swift */; };
 		500FDB605EB562468F5019ED /* LaunchPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68CE8226989A0CE43003027 /* LaunchPerformanceTests.swift */; };
 		59D32AC7426729C4DCF2F7E2 /* PlatformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E420FF87A67E0FC913085C8 /* PlatformTests.swift */; };
@@ -26,6 +28,8 @@
 		613F7359AC9658298695AFB8 /* FeatureModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12411275B17FA06F5B08F27 /* FeatureModelTests.swift */; };
 		75D636247109167384FA2AE2 /* PolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6FF7BE7397D483F8547623 /* PolicyTests.swift */; };
 		7E411F47D25151F9BFB828B5 /* KinBeaconReport.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 21BE47096C506B4BA2B4A5D6 /* KinBeaconReport.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7F27E3308AD1D3F2F2533E5E /* LiveChildPairingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AE60336A60AB7FBA7F3C03 /* LiveChildPairingUITests.swift */; };
+		8267834A09B86767451CCE2E /* GeofenceMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C042E11A1407F48F2622F18D /* GeofenceMonitorTests.swift */; };
 		8C21374152C6422E7174D59B /* KinBeaconApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310304F1E21D363B4BA45009 /* KinBeaconApp.swift */; };
 		8E1FC278F21313450F64F91E /* ScreenTimeShared in Frameworks */ = {isa = PBXBuildFile; productRef = E72481493898776B3898BDB8 /* ScreenTimeShared */; };
 		90E9372CCE6224DD51C32EA4 /* KinBeaconShieldAction.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 107A6599C90E6F00FECE58FA /* KinBeaconShieldAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -33,12 +37,15 @@
 		9C7B39359B88789FBEB4F52C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947B30671F2AE96A076A1D63 /* Assets.xcassets */; };
 		AC718AC3E58C8D0BD0038027 /* NetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C9720398A9E0FAFEA7F8D /* NetworkingTests.swift */; };
 		ACCB0DE881F6FCFA94338197 /* ChildFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */; };
+		B459DF7D2F353BBAFB0B054A /* LiveBackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F675A8A96DFE92ABBBA7320 /* LiveBackendClient.swift */; };
 		C995A39D532CA3227FC9E04E /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343CA75BA9E85F62A6CE3095 /* ScreenshotTests.swift */; };
+		CA5FBE99D24D5E29BC9887BC /* SupabaseIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0259812DF738243761A68B1B /* SupabaseIntegrationTests.swift */; };
 		CFFA1AF56565CD065BB28C16 /* KinBeaconUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */; };
 		D0633B9C23117C4D49988908 /* KinShieldAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE3A04292BD12EF674A92D4 /* KinShieldAction.swift */; };
 		D9C76EBD44ADD09AE7C837D3 /* KinActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D11E47BFF6CDF1603C8782 /* KinActivityMonitor.swift */; };
 		EB1400B0A18FF3837E9716A0 /* LocationPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66AC88DA8CCD48172EC13 /* LocationPolicyTests.swift */; };
 		F0CBAF74633DABB768F45903 /* ParentFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C658B5B1EB001472361F541B /* ParentFlowTests.swift */; };
+		F962EE26CC2469FF18750D52 /* LiveOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5CB3C1CF6A5BB5C31BF1D /* LiveOnboardingTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,12 +121,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0259812DF738243761A68B1B /* SupabaseIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseIntegrationTests.swift; sourceTree = "<group>"; };
 		107A6599C90E6F00FECE58FA /* KinBeaconShieldAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KinBeaconShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		11137D37CF125A089E841592 /* AccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTests.swift; sourceTree = "<group>"; };
 		14DACD19F9FF1F4CD65C406A /* ShieldConfiguration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldConfiguration.entitlements; sourceTree = "<group>"; };
 		16E47D42640BB6BD4087838E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		179AA820C473AA109A032B51 /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		21BE47096C506B4BA2B4A5D6 /* KinBeaconReport.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = KinBeaconReport.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		27AE60336A60AB7FBA7F3C03 /* LiveChildPairingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChildPairingUITests.swift; sourceTree = "<group>"; };
 		28941175F0A98E8113087E3A /* RoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingTests.swift; sourceTree = "<group>"; };
+		2F08466B87CE2EE93904403D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		310304F1E21D363B4BA45009 /* KinBeaconApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinBeaconApp.swift; sourceTree = "<group>"; };
 		343CA75BA9E85F62A6CE3095 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		3927138338A87B67E36584CE /* KinBeaconUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KinBeaconUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +138,7 @@
 		441D0598AC523F8CB89E1ADA /* KinKitTestHost.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KinKitTestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46541109A63AA5DF0BDC952E /* ScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTests.swift; sourceTree = "<group>"; };
 		48E30763CAE9772CD3A2D7BA /* KinReportExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinReportExtension.swift; sourceTree = "<group>"; };
+		49D5CB3C1CF6A5BB5C31BF1D /* LiveOnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveOnboardingTests.swift; sourceTree = "<group>"; };
 		4E420FF87A67E0FC913085C8 /* PlatformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformTests.swift; sourceTree = "<group>"; };
 		4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildFlowTests.swift; sourceTree = "<group>"; };
 		51932D319444F40ECB094C4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +149,8 @@
 		670317005F9A3DADF92D2FE0 /* KinShieldConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinShieldConfiguration.swift; sourceTree = "<group>"; };
 		6F590EBE6A17FB2BECAEB278 /* Report.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Report.entitlements; sourceTree = "<group>"; };
 		7BE3A04292BD12EF674A92D4 /* KinShieldAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinShieldAction.swift; sourceTree = "<group>"; };
+		8D1DC3531F66057F04552F2B /* LiveAccountUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveAccountUITests.swift; sourceTree = "<group>"; };
+		8F675A8A96DFE92ABBBA7320 /* LiveBackendClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveBackendClient.swift; sourceTree = "<group>"; };
 		90C4F0ECD2A180470AE073FC /* KinBeacon.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KinBeacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		931AE6BE004A6A38F5114855 /* Monitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Monitor.entitlements; sourceTree = "<group>"; };
 		947B30671F2AE96A076A1D63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -144,6 +158,7 @@
 		9C435D795EF6B21DEB9A3182 /* DatabaseAndSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAndSyncTests.swift; sourceTree = "<group>"; };
 		9D6FF7BE7397D483F8547623 /* PolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyTests.swift; sourceTree = "<group>"; };
 		B60E5545E1E292682D9A4A19 /* KinKitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KinKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C042E11A1407F48F2622F18D /* GeofenceMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeofenceMonitorTests.swift; sourceTree = "<group>"; };
 		C0D4F8EA44B950CFC8F69A05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C658B5B1EB001472361F541B /* ParentFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentFlowTests.swift; sourceTree = "<group>"; };
 		C8694C90B95A059C3C912195 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
@@ -153,6 +168,7 @@
 		DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinBeaconUITestCase.swift; sourceTree = "<group>"; };
 		DBCD4B43C014EEFA636FD0B3 /* DemoBackendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoBackendTests.swift; sourceTree = "<group>"; };
 		E12411275B17FA06F5B08F27 /* FeatureModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureModelTests.swift; sourceTree = "<group>"; };
+		E87B6EC37647B8C3DD6CCE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FC4F1CCDD131CEC54DC48B6C /* KinBeaconMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KinBeaconMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD05A589164DC1048776D6A8 /* ShieldAction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldAction.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -225,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				E12411275B17FA06F5B08F27 /* FeatureModelTests.swift */,
+				49D5CB3C1CF6A5BB5C31BF1D /* LiveOnboardingTests.swift */,
 				28941175F0A98E8113087E3A /* RoutingTests.swift */,
 			);
 			path = FeatureTests;
@@ -242,6 +259,7 @@
 		2852D5907C3BB059C195B58C /* TestHost */ = {
 			isa = PBXGroup;
 			children = (
+				E87B6EC37647B8C3DD6CCE46 /* Info.plist */,
 				5F2E39D99838E832ABB34D9B /* TestHostApp.swift */,
 			);
 			path = TestHost;
@@ -267,6 +285,7 @@
 		3909CBB7B97824F13706D8FB /* PlatformTests */ = {
 			isa = PBXGroup;
 			children = (
+				C042E11A1407F48F2622F18D /* GeofenceMonitorTests.swift */,
 				4E420FF87A67E0FC913085C8 /* PlatformTests.swift */,
 			);
 			path = PlatformTests;
@@ -311,6 +330,7 @@
 				9C435D795EF6B21DEB9A3182 /* DatabaseAndSyncTests.swift */,
 				DBCD4B43C014EEFA636FD0B3 /* DemoBackendTests.swift */,
 				652C9720398A9E0FAFEA7F8D /* NetworkingTests.swift */,
+				0259812DF738243761A68B1B /* SupabaseIntegrationTests.swift */,
 			);
 			path = DataTests;
 			sourceTree = "<group>";
@@ -370,8 +390,12 @@
 			isa = PBXGroup;
 			children = (
 				4EFEA5FBF17D4C2C5D65FB40 /* ChildFlowTests.swift */,
+				2F08466B87CE2EE93904403D /* Info.plist */,
 				DB1CEB336A4888269D3848E0 /* KinBeaconUITestCase.swift */,
 				D68CE8226989A0CE43003027 /* LaunchPerformanceTests.swift */,
+				8D1DC3531F66057F04552F2B /* LiveAccountUITests.swift */,
+				8F675A8A96DFE92ABBBA7320 /* LiveBackendClient.swift */,
+				27AE60336A60AB7FBA7F3C03 /* LiveChildPairingUITests.swift */,
 				C658B5B1EB001472361F541B /* ParentFlowTests.swift */,
 				343CA75BA9E85F62A6CE3095 /* ScreenshotTests.swift */,
 			);
@@ -381,6 +405,7 @@
 		E26E67E545A0A18DA27AAC7C /* DomainTests */ = {
 			isa = PBXGroup;
 			children = (
+				11137D37CF125A089E841592 /* AccountTests.swift */,
 				179AA820C473AA109A032B51 /* CoreTests.swift */,
 				CBA66AC88DA8CCD48172EC13 /* LocationPolicyTests.swift */,
 				9D6FF7BE7397D483F8547623 /* PolicyTests.swift */,
@@ -667,6 +692,9 @@
 				ACCB0DE881F6FCFA94338197 /* ChildFlowTests.swift in Sources */,
 				CFFA1AF56565CD065BB28C16 /* KinBeaconUITestCase.swift in Sources */,
 				500FDB605EB562468F5019ED /* LaunchPerformanceTests.swift in Sources */,
+				334448803D4D3AD3E3A0B49E /* LiveAccountUITests.swift in Sources */,
+				B459DF7D2F353BBAFB0B054A /* LiveBackendClient.swift in Sources */,
+				7F27E3308AD1D3F2F2533E5E /* LiveChildPairingUITests.swift in Sources */,
 				F0CBAF74633DABB768F45903 /* ParentFlowTests.swift in Sources */,
 				C995A39D532CA3227FC9E04E /* ScreenshotTests.swift in Sources */,
 			);
@@ -676,16 +704,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C71D701957C30C243B0E9F1 /* AccountTests.swift in Sources */,
 				4AB2BBD9FFDCB17A4A151B79 /* CoreTests.swift in Sources */,
 				33E51ADA26F4BC13C08D31CD /* DatabaseAndSyncTests.swift in Sources */,
 				2AA91F0FF25E9A4E8291A06B /* DemoBackendTests.swift in Sources */,
 				613F7359AC9658298695AFB8 /* FeatureModelTests.swift in Sources */,
+				8267834A09B86767451CCE2E /* GeofenceMonitorTests.swift in Sources */,
+				F962EE26CC2469FF18750D52 /* LiveOnboardingTests.swift in Sources */,
 				EB1400B0A18FF3837E9716A0 /* LocationPolicyTests.swift in Sources */,
 				AC718AC3E58C8D0BD0038027 /* NetworkingTests.swift in Sources */,
 				59D32AC7426729C4DCF2F7E2 /* PlatformTests.swift in Sources */,
 				75D636247109167384FA2AE2 /* PolicyTests.swift in Sources */,
 				439B69481422C4B1AAE86F2C /* RoutingTests.swift in Sources */,
 				4FF80E280CA7A53BA19D2913 /* ScheduleTests.swift in Sources */,
+				CA5FBE99D24D5E29BC9887BC /* SupabaseIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,7 +894,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -967,7 +999,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1076,8 +1108,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_FILE = TestHost/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1093,8 +1124,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_FILE = TestHost/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -6,6 +6,7 @@ import Domain
 import Foundation
 import KinCore
 import KinStore
+import LocationKit
 import Messaging
 
 /// Everything the parent UI needs, alive for as long as this device is in the parent role.
@@ -17,15 +18,34 @@ public final class ParentRuntime {
     public let routers: [ParentTab: Router<ParentRoute>]
     public let store: FamilyStore
     let backend: any ParentBackend
+    /// `nil` in the demo (no accounts there).
+    let account: (any AccountService)?
     let controlsModels: ControlsModels
     let familyName: String
     let isDemo: Bool
 
     @ObservationIgnored private let presenter = LocalNotificationPresenter()
+    @ObservationIgnored private let locationPipeline: LocationPipeline?
     @ObservationIgnored private let cache = SnapshotCache<FamilySnapshot>(name: "family-snapshot")
 
-    init(backend: any ParentBackend, familyName: String, isDemo: Bool) {
+    init(
+        backend: any ParentBackend,
+        account: (any AccountService)?,
+        location: (any LocationTracking)? = nil,
+        familyName: String,
+        isDemo: Bool
+    ) {
         self.backend = backend
+        self.account = account
+        if let location, let uploader = backend as? any CompanionService {
+            locationPipeline = LocationPipeline(tracker: location, sinks: .init(
+                persist: { _ in },
+                enqueue: { samples in try? await uploader.upload(locations: samples) },
+                flush: {}
+            ))
+        } else {
+            locationPipeline = nil
+        }
         self.familyName = familyName
         self.isDemo = isDemo
         store = FamilyStore(repository: backend, feed: backend, controls: backend)
@@ -47,6 +67,7 @@ public final class ParentRuntime {
         store.onEvent = { [weak self] event, snapshot in
             self?.present(event, snapshot: snapshot)
         }
+        await locationPipeline?.start()
         async let persist: Void = persistSnapshots()
         async let live: Void = store.run()
         _ = await (persist, live)

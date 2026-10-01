@@ -8,15 +8,18 @@ import KinCore
 public struct ChildHomeView: View {
     let store: CompanionStore
     let navigate: (ChildRoute) -> Void
+    /// Called when this device is no longer in a family (a parent removed it) and the user chooses to set up again.
+    let setUpAgain: () -> Void
 
-    public init(store: CompanionStore, navigate: @escaping (ChildRoute) -> Void) {
+    public init(store: CompanionStore, navigate: @escaping (ChildRoute) -> Void, setUpAgain: @escaping () -> Void = {}) {
         self.store = store
         self.navigate = navigate
+        self.setUpAgain = setUpAgain
     }
 
     public var body: some View {
         ScrollView {
-            if let dashboard = store.dashboard {
+            if !store.isRemovedFromFamily, let dashboard = store.dashboard {
                 VStack(alignment: .leading, spacing: KinSpace.md) {
                     header(dashboard)
                     HeroCard(
@@ -55,6 +58,16 @@ public struct ChildHomeView: View {
                     }
                 }
                 .padding(KinSpace.md)
+            } else if store.isRemovedFromFamily {
+                ContentUnavailableView {
+                    Label("You’re no longer in a family", systemImage: "person.crop.circle.badge.xmark")
+                } description: {
+                    Text("A parent removed this device. Ask them for a new code to join again.")
+                } actions: {
+                    Button("Set up again", action: setUpAgain).buttonStyle(.borderedProminent).tint(KinColor.brand)
+                        .accessibilityIdentifier("home.setUpAgain")
+                }
+                .frame(minHeight: 500)
             } else if let error = store.error {
                 StateMessageView(
                     symbol: "wifi.exclamationmark",

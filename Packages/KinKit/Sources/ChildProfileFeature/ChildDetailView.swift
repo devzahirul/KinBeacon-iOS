@@ -7,6 +7,8 @@ import Session
 
 public struct ChildDetailView: View {
     @State private var model: ChildProfileModel
+    @State private var confirmsRemoval = false
+    @Environment(\.dismiss) private var dismiss
     let navigate: (ParentRoute) -> Void
 
     public init(model: ChildProfileModel, navigate: @escaping (ParentRoute) -> Void) {
@@ -68,6 +70,13 @@ public struct ChildDetailView: View {
                 Menu {
                     Button("Locate now", systemImage: "location.magnifyingglass") { Task { await model.locateNow() } }
                     Button("Ask to check in", systemImage: "ellipsis.message") { Task { await model.requestCheckIn() } }
+                    if model.canRemove {
+                        Divider()
+                        Button("Remove from family", systemImage: "person.crop.circle.badge.minus", role: .destructive) {
+                            confirmsRemoval = true
+                        }
+                        .accessibilityIdentifier("child.remove")
+                    }
                 } label: {
                     Image(systemName: "ellipsis.circle")
                 }
@@ -80,6 +89,32 @@ public struct ChildDetailView: View {
             }
         })) {}
         .task { await model.load() }
+        .confirmationDialog(
+            String(localized: "Remove \(model.member?.name ?? "") from your family?"),
+            isPresented: $confirmsRemoval,
+            titleVisibility: .visible
+        ) {
+            Button("Remove from family", role: .destructive) {
+                Task {
+                    if await model.removeChild() {
+                        dismiss()
+                    }
+                }
+            }
+            .accessibilityIdentifier("child.confirmRemove")
+        } message: {
+            Text(
+                """
+                Their device leaves the family, and their location history, School Mode settings, requests \
+                and check-ins are permanently deleted. You can add them again with a new code.
+                """
+            )
+        }
+        .overlay {
+            if model.isRemoving {
+                ProgressView()
+            }
+        }
     }
 
     private func header(_ member: FamilyMember) -> some View {

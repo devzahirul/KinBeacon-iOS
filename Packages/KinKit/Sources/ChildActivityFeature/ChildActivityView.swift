@@ -29,6 +29,10 @@ public struct ChildActivityView: View {
                 switch model.phase {
                 case .loading:
                     ProgressView().frame(maxWidth: .infinity, minHeight: 160)
+                case .failed(.privateToScreenTime):
+                    if factories.usageReport == nil {
+                        InlineBanner(.info, message: KinError.privateToScreenTime.errorDescription ?? "")
+                    }
                 case let .failed(error):
                     InlineBanner(.error, message: error.errorDescription ?? "")
                 case let .loaded(summary):

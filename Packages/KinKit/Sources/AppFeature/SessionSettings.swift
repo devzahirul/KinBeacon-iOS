@@ -2,32 +2,32 @@ import Domain
 import Foundation
 import KinCore
 
-/// What this device is (parent/child) and its local preferences. Tiny and synchronous to read, so the root view
-/// can pick the right UI on the very first frame without touching the database.
-struct SessionSettings: Equatable {
+/// What this device is (parent/child, demo/live) and its local preferences. One small JSON value in UserDefaults:
+/// cheap and synchronous to read, so the root view picks the right UI on the very first frame, before any network.
+struct SessionSettings: Equatable, Codable {
     var role: MemberRole?
-    var familyName: String
-    var liveScreenTime: Bool
+    var isDemo = true
+    var membership: FamilyMembership?
+    var familyName = "Our Family"
+    /// Demo on a real device: opt-in to real Screen Time enforcement.
+    var liveScreenTime = false
 
-    private static let roleKey = "kin.session.role"
-    private static let familyKey = "kin.session.familyName"
-    private static let liveScreenTimeKey = "kin.session.liveScreenTime"
+    private static let key = "kin.session.v2"
 
     static func load(from defaults: UserDefaults, options: LaunchOptions) -> SessionSettings {
         if options.resetState {
-            [roleKey, familyKey, liveScreenTimeKey].forEach(defaults.removeObject(forKey:))
+            defaults.removeObject(forKey: key)
         }
-        let forcedRole = options.role.map { $0 == .parent ? MemberRole.parent : .child }
-        return SessionSettings(
-            role: forcedRole ?? defaults.string(forKey: roleKey).flatMap(MemberRole.init(rawValue:)),
-            familyName: defaults.string(forKey: familyKey) ?? "Our Family",
-            liveScreenTime: defaults.bool(forKey: liveScreenTimeKey)
-        )
+        var settings = defaults.data(forKey: key).flatMap { try? JSONDecoder().decode(SessionSettings.self, from: $0) } ?? SessionSettings()
+        if let forced = options.role {
+            // UI tests and screenshots always run against the deterministic demo family.
+            settings.role = forced == .parent ? .parent : .child
+            settings.isDemo = true
+        }
+        return settings
     }
 
     func save(to defaults: UserDefaults) {
-        defaults.set(role?.rawValue, forKey: Self.roleKey)
-        defaults.set(familyName, forKey: Self.familyKey)
-        defaults.set(liveScreenTime, forKey: Self.liveScreenTimeKey)
+        defaults.set(try? JSONEncoder().encode(self), forKey: Self.key)
     }
 }

@@ -1,4 +1,10 @@
-// Shared build settings. Local overrides (e.g. KIN_API_BASE_URL) go in the git-ignored Local.xcconfig.
+// Shared build settings. The live backend is OFF unless Config/Supabase.local.xcconfig provides a host + publishable
+// key (git-ignored — copy Config/Supabase.local.example.xcconfig). Without it the app offers the on-device demo only,
+// so anyone can clone, build and run it.
 DEVELOPMENT_TEAM = 6VC84T9283
-KIN_API_BASE_URL =
+SUPABASE_HOST =
+SUPABASE_PUBLISHABLE_KEY =
+#include? "Supabase.local.xcconfig"
+
+// Machine-local overrides (git-ignored).
 #include? "Local.xcconfig"

@@ -23,11 +23,15 @@ public struct FamilyMapView: View {
             header
         }
         .safeAreaInset(edge: .bottom) {
-            if let member = model.selectedMember, let snapshot = model.snapshot {
+            if let member = model.selectedMember, let snapshot = model.snapshot, snapshot.status(member.id)?.location != nil {
                 MemberCard(member: member, snapshot: snapshot, model: model, navigate: navigate)
                     .padding(.horizontal, KinSpace.md)
                     .padding(.bottom, KinSpace.xs)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
+            } else if let snapshot = model.snapshot {
+                EmptyFamilyCard(snapshot: snapshot, invite: invite)
+                    .padding(.horizontal, KinSpace.md)
+                    .padding(.bottom, KinSpace.xs)
             }
         }
         .overlay(alignment: .top) {
@@ -77,7 +81,7 @@ public struct FamilyMapView: View {
                 MapCircleButton(symbol: "square.3.layers.3d", label: "Map style") { model.mapStyleIsHybrid.toggle() }
                 MapCircleButton(symbol: "location.fill", label: "Show everyone") { model.frameEveryone() }
             }
-            .padding(.top, 76)
+            .padding(.top, 124)
             .padding(.trailing, KinSpace.md)
         }
         .ignoresSafeArea(edges: .top)
@@ -240,5 +244,31 @@ struct MemberCard: View {
         .background(KinColor.surface, in: RoundedRectangle(cornerRadius: KinRadius.xl, style: .continuous))
         .shadow(color: .black.opacity(0.12), radius: 18, y: 6)
         .sensoryFeedback(.selection, trigger: member.id)
+    }
+}
+
+/// First run of a live family: nobody shares a location yet.
+struct EmptyFamilyCard: View {
+    let snapshot: FamilySnapshot
+    let invite: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: KinSpace.sm) {
+            if let waiting = snapshot.children.first {
+                Label("Waiting for \(waiting.name)’s location", systemImage: "location.slash").font(.kinHeadline)
+                Text("Once \(waiting.name)’s iPhone is paired and location is set to “Always”, they’ll appear here.")
+                    .font(.kinSubheadline)
+                    .foregroundStyle(KinColor.textSecondary)
+            } else {
+                Label("Add your first child", systemImage: "person.crop.circle.badge.plus").font(.kinHeadline)
+                Text("Pair your child’s iPhone with a one-time code to see their location and set up School Mode.")
+                    .font(.kinSubheadline)
+                    .foregroundStyle(KinColor.textSecondary)
+            }
+            Button("Add a child’s device", action: invite).buttonStyle(.kinPrimary).accessibilityIdentifier("map.addChild")
+        }
+        .padding(KinSpace.md)
+        .background(KinColor.surface, in: RoundedRectangle(cornerRadius: KinRadius.xl, style: .continuous))
+        .shadow(color: .black.opacity(0.12), radius: 18, y: 6)
     }
 }

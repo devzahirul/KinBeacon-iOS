@@ -26,7 +26,7 @@
                     store.clearAllSettings()
                     continue
                 }
-                apply(mode, configuration: policy.configuration, to: store)
+                apply(mode, configuration: policy.configuration, deviceAllowedApps: policy.deviceAllowedApps, to: store)
             }
         }
 
@@ -36,8 +36,15 @@
 
         /// Allow-list enforcement: every app category is shielded except the mode's allowed apps and the
         /// "Always Allowed" set. Allow-lists fail closed — a newly installed game is blocked by default.
-        private func apply(_ mode: ModeSettings, configuration: ControlsConfiguration, to store: ManagedSettingsStore) {
-            let allowed = Self.tokens(mode.allowedApps).union(Self.tokens(configuration.alwaysAllowed))
+        private func apply(
+            _ mode: ModeSettings,
+            configuration: ControlsConfiguration,
+            deviceAllowedApps: AppSelection?,
+            to store: ManagedSettingsStore
+        ) {
+            let allowed = Self.tokens(mode.allowedApps)
+                .union(Self.tokens(configuration.alwaysAllowed))
+                .union(Self.tokens(deviceAllowedApps ?? AppSelection()))
             store.shield.applicationCategories = .all(except: allowed)
             store.shield.webDomainCategories = .all()
             switch configuration.webFilter {

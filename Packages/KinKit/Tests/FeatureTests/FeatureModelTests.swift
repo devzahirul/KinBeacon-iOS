@@ -170,7 +170,7 @@ struct FeatureModelTests {
         model.choose(.child)
         #expect(model.path == [.pairing])
         await model.submitPairingCode()
-        #expect(model.pairingError != nil)
+        #expect(model.errorMessage != nil)
         model.pairingCode = "482913"
         await model.submitPairingCode()
         #expect(model.path.last == .permission(.location))
@@ -181,16 +181,18 @@ struct FeatureModelTests {
         #expect(finished?.role == .child)
     }
 
-    @Test("Parent onboarding names the family and asks only for notifications")
+    @Test("Parent onboarding names the family, then asks for location and notifications")
     func parentOnboarding() async {
         var finished: OnboardingModel.Result?
         let model = OnboardingModel(permissions: GrantingPermissions()) { finished = $0 }
         model.choose(.parent)
         model.familyName = "  The Parkers "
-        model.submitFamilyName()
+        await model.submitFamilyName()
+        #expect(model.path.last == .permission(.location), "parents share their location too")
+        await model.request(.location)
         #expect(model.path.last == .permission(.notifications))
         await model.request(.notifications)
-        #expect(finished == OnboardingModel.Result(role: .parent, familyName: "The Parkers"))
+        #expect(finished == OnboardingModel.Result(role: .parent, familyName: "The Parkers", isDemo: true, membership: nil))
     }
 
     @Test("Help reflects permission health and reports changes")

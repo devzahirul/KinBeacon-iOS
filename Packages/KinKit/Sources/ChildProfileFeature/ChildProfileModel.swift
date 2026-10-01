@@ -19,6 +19,8 @@ public final class ChildProfileModel {
     @ObservationIgnored public let store: FamilyStore
     @ObservationIgnored private let activity: any ActivityService
     @ObservationIgnored private let controls: any ParentControlService
+    @ObservationIgnored private let admin: (any FamilyAdminService)?
+    public private(set) var isRemoving = false
     @ObservationIgnored private let now: () -> Date
 
     public init(
@@ -26,8 +28,10 @@ public final class ChildProfileModel {
         store: FamilyStore,
         activity: any ActivityService,
         controls: any ParentControlService,
+        admin: (any FamilyAdminService)? = nil,
         now: @escaping () -> Date = { Date() }
     ) {
+        self.admin = admin
         self.memberID = memberID
         self.store = store
         self.activity = activity
@@ -91,6 +95,24 @@ public final class ChildProfileModel {
 
     public func clearMessage() {
         message = nil
+    }
+
+    public var canRemove: Bool {
+        admin != nil && member?.role == .child
+    }
+
+    /// Returns `true` when the child was removed (the screen then pops).
+    public func removeChild() async -> Bool {
+        guard let admin else { return false }
+        isRemoving = true
+        defer { isRemoving = false }
+        do {
+            try await admin.removeChild(memberID)
+            return true
+        } catch {
+            message = (error as? KinError)?.errorDescription ?? error.localizedDescription
+            return false
+        }
     }
 
     public func notifiesOnArrival(_ place: Place) -> Bool {

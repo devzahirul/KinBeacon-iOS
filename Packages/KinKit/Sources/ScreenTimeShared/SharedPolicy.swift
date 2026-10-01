@@ -15,6 +15,9 @@ public struct SharedPolicy: Codable, Hashable, Sendable {
     public var childName: String
     public var guardianName: String
     public var updatedAt: Date
+    /// Apps allowed during every mode, chosen on this device with `FamilyActivityPicker`. Application tokens are
+    /// device-specific, so the parent's own picker selection can't be used here — this list is chosen on the child's iPhone.
+    public var deviceAllowedApps: AppSelection?
 
     public init(
         configuration: ControlsConfiguration,

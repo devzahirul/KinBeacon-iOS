@@ -2,6 +2,7 @@
 import Foundation
 import KinCore
 @testable import Networking
+@testable import SupabaseBackend
 import Testing
 import TestSupport
 
@@ -128,5 +129,17 @@ struct ServerSentEventParserTests {
         #expect(parser.consume("") == ServerSentEvent(event: "alert", data: "{}", id: "42"))
         // A blank line without data produces nothing.
         #expect(parser.consume("") == nil)
+    }
+}
+
+@Suite("Supabase rows")
+struct SupabaseRowTests {
+    @Test("An empty controls document decodes to safe defaults instead of failing")
+    func tolerantControls() throws {
+        let json = #"{"member_id":"m1","family_id":"f1","revision":3,"config":{}}"#
+        let row = try JSONDecoder().decode(ControlsRow.self, from: Data(json.utf8))
+        #expect(row.domain.childID == "m1")
+        #expect(row.domain.revision == 3)
+        #expect(row.domain.mode(.school)?.isEnabled == true)
     }
 }

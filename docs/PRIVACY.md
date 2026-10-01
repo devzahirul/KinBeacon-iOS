@@ -1,18 +1,35 @@
-# KinBeacon privacy summary
+# KinBeacon privacy policy
 
-KinBeacon is a family-safety app. It processes sensitive data — a child's location and app-usage limits — so the
-design rule is **collect the minimum, keep it the shortest, share it only inside the family**.
+_Last updated: 1 October 2026_
 
-| Data | Why | Where it lives | Retention |
+KinBeacon is a family-safety app. It processes sensitive information — a child's location and Screen Time
+restrictions — so our rule is **collect the minimum, keep it the shortest, share it only inside the family**.
+We do not sell data, show ads, or track you across apps or websites.
+
+## What we collect and why
+
+| Data | Why | Who can see it | Retention |
 |---|---|---|---|
-| Precise location | live map, arrival/leave alerts, SOS | device (SwiftData) + family server | 30 days, then deleted on device (`pruneHistory`) and server |
-| Check-ins, SOS, extra-time requests + optional messages | the feature itself | device outbox → server | 90 days |
-| Permission health (on/off flags only) | tamper alerts for parents | server | latest value only |
-| Battery level | "location may stop updating" warnings | server | latest value only |
-| Screen-time usage | parent reports | **never leaves Apple's DeviceActivityReport extension sandbox** | n/a |
-| App identities chosen in the picker | School Mode allow-list | opaque `ApplicationToken`s on device | until changed |
+| Parent name and email address | your account and sign-in | you | until you delete your account |
+| Child's first name, age, grade, avatar | shown to the family | your family | until removed or account deleted |
+| Precise location of paired child devices | live map, arrival/leave alerts, SOS | your family | **30 days**, then automatically deleted (on device and server) |
+| Check-ins, SOS, extra-time requests and their optional messages | the features themselves | your family | until the family is deleted |
+| Permission status (on/off) and battery level of child devices | "location permission turned off" and low-battery alerts | your family | latest value only |
+| Push notification token | delivering notifications | nobody (system use) | until the app is removed |
+| Screen-time usage | parent reports | **never collected** — Apple's Screen Time renders it inside its privacy sandbox | — |
+| Apps chosen for School Mode | enforcement | stays on the child's device as Apple's opaque tokens | — |
 
-- No advertising SDKs, no analytics SDKs, no tracking (`NSPrivacyTracking = false` in `PrivacyInfo.xcprivacy`).
-- Logs mark coordinates and names `.private`; they never appear in sysdiagnoses.
-- Remote commands are signed per device; a leaked push credential cannot unlock a child's apps.
-- Permissions are requested one at a time, after an explanation screen, never at first launch.
+## How it's protected
+- Encrypted in transit (TLS) and at rest by our hosting provider (Supabase, AWS).
+- Row-level security: an account can only ever read its own family's records.
+- Logs never contain coordinates or names.
+- Remote commands can only be issued by a parent of the same family.
+
+## Children
+KinBeacon is set up and controlled by a parent. Children's accounts are created only by redeeming a code their parent
+generated; no email address or other contact information is collected from children.
+
+## Your choices
+- Turn location sharing off at any time in iOS Settings (the family is notified).
+- Delete your account in Settings → *Delete account*. Deleting the last parent deletes the whole family's data.
+- Questions: see [Support](SUPPORT.md).

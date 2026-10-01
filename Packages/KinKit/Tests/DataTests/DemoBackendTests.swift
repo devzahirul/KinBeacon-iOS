@@ -50,6 +50,17 @@ struct DemoBackendTests {
         #expect(resolved)
     }
 
+    @Test("Removing a child deletes everything about them")
+    func removeChild() async throws {
+        let demo = backend(.parent)
+        try await demo.removeChild(DemoData.lucasID)
+        var iterator = demo.snapshots().makeAsyncIterator()
+        let snapshot = try #require(await iterator.next())
+        #expect(snapshot.member(DemoData.lucasID) == nil)
+        #expect(snapshot.openAlerts.isEmpty, "Lucas' alert goes with him")
+        await #expect(throws: KinError.unauthorized) { try await demo.removeChild(DemoData.parentID) }
+    }
+
     @Test("Saving controls bumps the revision")
     func saveControls() async throws {
         let demo = backend(.parent)

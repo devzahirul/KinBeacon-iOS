@@ -16,6 +16,12 @@ public enum KinError: Error, Equatable, Sendable, LocalizedError {
     case permissionDenied(PermissionKind)
     case requestRejected(TimeRequestPolicy.Violation)
     case unsupportedOnThisDevice
+    /// Screen-time numbers never leave Apple's Screen Time sandbox; they are rendered by the report extension.
+    case privateToScreenTime
+    case invalidPairingCode
+    case tooManyAttempts
+    case alreadyPaired
+    case authentication(String)
 
     public var errorDescription: String? {
         switch self {
@@ -27,6 +33,11 @@ public enum KinError: Error, Equatable, Sendable, LocalizedError {
         case let .permissionDenied(kind): String(localized: "\(kind.title) is turned off. You can turn it on in Settings.")
         case let .requestRejected(violation): violation.message
         case .unsupportedOnThisDevice: String(localized: "This feature needs a real iPhone.")
+        case .privateToScreenTime: String(localized: "Screen time is shown by Apple’s Screen Time on this device.")
+        case .invalidPairingCode: String(localized: "That code didn’t work. Codes expire after 10 minutes — ask for a new one.")
+        case .tooManyAttempts: String(localized: "Too many tries. Wait a few minutes and try again.")
+        case .alreadyPaired: String(localized: "This device or child is already paired.")
+        case let .authentication(message): message
         }
     }
 
@@ -122,6 +133,24 @@ public protocol CompanionService: Sendable {
     func triggerSOS(_ event: SOSEvent) async throws
     func report(permissions: PermissionHealthReport) async throws
     func report(battery: BatteryState) async throws
+    /// The family's safe places, registered as geofences on the child's device. Defaults to none.
+    func places() async throws -> [Place]
+    /// Commands addressed to this device as they are created (realtime). Defaults to none.
+    func commandUpdates() -> AsyncStream<RemoteCommand>
+    /// Marks a command as delivered so the heartbeat doesn't fetch it again.
+    func acknowledge(_ commandID: UUID) async throws
+}
+
+public extension CompanionService {
+    func places() async throws -> [Place] {
+        []
+    }
+
+    func commandUpdates() -> AsyncStream<RemoteCommand> {
+        AsyncStream { $0.finish() }
+    }
+
+    func acknowledge(_ commandID: UUID) async throws {}
 }
 
 /// What child-facing screens call. Implemented by the outbox-backed sync engine: calls return as soon as the action

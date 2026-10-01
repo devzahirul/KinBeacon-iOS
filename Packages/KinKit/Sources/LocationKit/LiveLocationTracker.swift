@@ -18,7 +18,7 @@
     public final class LiveLocationTracker: LocationTracking, Sendable {
         private let bridge: ManagerBridge
         private let profileHub = Broadcaster<TrackingProfile>(replaysLatest: true)
-        private let geofences = GeofenceMonitor()
+        private let geofences = GeofenceMonitor.shared
 
         @MainActor
         public init(initialProfile: TrackingProfile = .balanced) {
@@ -205,35 +205,47 @@
 
     // MARK: - Geofences
 
-    /// Wraps a single named `CLMonitor`. iOS allows 20 monitored conditions per app; we monitor at most
-    /// `maxConditions` and keep the rest for future features.
+    /// Wraps the app's single named `CLMonitor`.
+    ///
+    /// `CLMonitor(name)` raises an Objective-C assertion (abort) if a monitor with the same name is already open in
+    /// the process. Two rules prevent that:
+    ///  • one process-wide instance (`shared`) — however many trackers/runtimes exist (role switch, onboarding);
+    ///  • single-flight creation — actor methods are re-entrant across `await`, so concurrent first callers join one
+    ///    creation task instead of each constructing a monitor.
+    /// iOS allows 20 monitored conditions per app; we use at most `maxConditions`.
     actor GeofenceMonitor {
+        static let shared = GeofenceMonitor()
+        /// Must be alphanumeric: CLMonitor raises "Monitor name is not valid" (abort) for names with dots or dashes.
+        static let monitorName = "KinBeaconPlaces"
         static let maxConditions = 16
-        private var monitor: CLMonitor?
+        private var creation: Task<CLMonitor, Never>?
         private let hub = Broadcaster<GeofenceTransition>()
-        private var listening: Task<Void, Never>?
 
         private func resolvedMonitor() async -> CLMonitor {
-            if let monitor {
-                return monitor
+            if let creation {
+                return await creation.value
             }
-            let created = await CLMonitor("kinbeacon.places")
-            monitor = created
-            listening = Task { [hub] in
-                do {
-                    for try await event in await created.events {
-                        let id = PlaceID(rawValue: event.identifier)
-                        switch event.state {
-                        case .satisfied: hub.yield(.entered(id))
-                        case .unsatisfied: hub.yield(.exited(id))
-                        default: break
+            let hub = hub
+            let task = Task<CLMonitor, Never> {
+                let created = await CLMonitor(Self.monitorName)
+                Task {
+                    do {
+                        for try await event in await created.events {
+                            let id = PlaceID(rawValue: event.identifier)
+                            switch event.state {
+                            case .satisfied: hub.yield(.entered(id))
+                            case .unsatisfied: hub.yield(.exited(id))
+                            default: break
+                            }
                         }
+                    } catch {
+                        Log.location.error("Geofence events ended: \(error.localizedDescription, privacy: .public)")
                     }
-                } catch {
-                    Log.location.error("Geofence events ended: \(error.localizedDescription, privacy: .public)")
                 }
+                return created
             }
-            return created
+            creation = task
+            return await task.value
         }
 
         func monitor(_ places: [Place]) async {

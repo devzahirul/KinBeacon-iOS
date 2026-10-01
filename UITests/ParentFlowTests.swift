@@ -38,4 +38,17 @@ final class ParentFlowTests: KinBeaconUITestCase {
         save.tap()
         XCTAssertTrue(app.buttons["controls.activeMode"].waitForExistence(timeout: 5), "Save pops back to Controls")
     }
+
+    func testRemoveChildFromFamily() {
+        launch(role: "parent")
+        tapTab("Family")
+        let lucas = app.buttons["family.member.Lucas"]
+        XCTAssertTrue(lucas.waitForExistence(timeout: 5))
+        lucas.tap()
+        app.buttons["More actions"].tap()
+        app.buttons["child.remove"].tap()
+        app.buttons["child.confirmRemove"].firstMatch.tap()
+        XCTAssertTrue(app.buttons["family.member.Emma"].waitForExistence(timeout: 5), "back on the family list")
+        XCTAssertFalse(app.buttons["family.member.Lucas"].exists, "Lucas is removed")
+    }
 }

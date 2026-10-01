@@ -74,7 +74,8 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSRequiresIPhoneOS: true
         ITSAppUsesNonExemptEncryption: false
-        KinAPIBaseURL: $(KIN_API_BASE_URL)
+        KinSupabaseHost: $(SUPABASE_HOST)
+        KinSupabaseKey: $(SUPABASE_PUBLISHABLE_KEY)
         NSLocationWhenInUseUsageDescription: KinBeacon shares your location with your family so they know you got where you're going.
         NSLocationAlwaysAndWhenInUseUsageDescription: Choose “Always” so your family gets arrival alerts and can find you in an emergency, even when KinBeacon is closed.
         UIBackgroundModes: [location, fetch, remote-notification]
@@ -177,11 +178,16 @@ targets:
     type: application
     platform: iOS
     sources: [TestHost]
+    info:
+      path: TestHost/Info.plist
+      properties:
+        CFBundleDisplayName: KinKit Tests
+        UILaunchScreen: {}
+        KinSupabaseHost: $(SUPABASE_HOST)
+        KinSupabaseKey: $(SUPABASE_PUBLISHABLE_KEY)
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.testhost
-        GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_UILaunchScreen_Generation: YES
 
   KinKitTests:
     type: bundle.unit-test
@@ -206,10 +212,14 @@ targets:
     sources: [UITests]
     dependencies:
       - target: KinBeacon
+    info:
+      path: UITests/Info.plist
+      properties:
+        KinSupabaseHost: $(SUPABASE_HOST)
+        KinSupabaseKey: $(SUPABASE_PUBLISHABLE_KEY)
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lynkto.kinbeacon.uitests
-        GENERATE_INFOPLIST_FILE: YES
         TEST_TARGET_NAME: KinBeacon
 
 schemes:

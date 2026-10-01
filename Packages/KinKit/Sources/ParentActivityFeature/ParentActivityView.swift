@@ -8,6 +8,7 @@ import KinCore
 public struct ParentActivityView: View {
     let store: FamilyStore
     @State private var model: ActivityModel
+    @Environment(\.viewFactories) private var factories
     let navigate: (ParentRoute) -> Void
 
     public init(store: FamilyStore, model: ActivityModel, navigate: @escaping (ParentRoute) -> Void) {
@@ -29,6 +30,11 @@ public struct ParentActivityView: View {
                 switch model.phase {
                 case .loading:
                     ProgressView().frame(maxWidth: .infinity, minHeight: 240)
+                case .failed(.privateToScreenTime):
+                    ScreenTimeReportCard(report: factories.usageReport)
+                    if !model.visits.isEmpty {
+                        locationActivity
+                    }
                 case let .failed(error):
                     StateMessageView(symbol: "chart.bar.xaxis", title: String(localized: "No data"), message: error.errorDescription ?? "")
                 case let .loaded(summary):
@@ -118,5 +124,30 @@ struct ChildSwitcher: View {
                 Image(systemName: "chevron.down").font(.caption.weight(.bold)).foregroundStyle(KinColor.textSecondary)
             }
         }
+    }
+}
+
+/// Live families: Apple renders usage inside its privacy sandbox (DeviceActivityReport extension).
+struct ScreenTimeReportCard: View {
+    let report: (@MainActor @Sendable () -> AnyView)?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: KinSpace.sm) {
+            Label("Screen Time", systemImage: "hourglass").font(.kinSection)
+            if let report {
+                report()
+            } else {
+                Text("Usage is shown on a real iPhone.").font(.kinSubheadline).foregroundStyle(KinColor.textSecondary)
+            }
+            Text(
+                """
+                Provided by Apple’s Screen Time. App usage never leaves Apple’s privacy sandbox — not even \
+                KinBeacon’s servers see it. Your child’s iPhone must be in your Family Sharing group.
+                """
+            )
+            .font(.kinFootnote)
+            .foregroundStyle(KinColor.textSecondary)
+        }
+        .kinCard()
     }
 }

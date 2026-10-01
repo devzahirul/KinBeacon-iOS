@@ -1,6 +1,7 @@
 public import SwiftUI
 import DesignSystem
 import Domain
+import UIKit
 
 public struct OnboardingView: View {
     @State private var model: OnboardingModel
@@ -15,8 +16,10 @@ public struct OnboardingView: View {
                 .navigationDestination(for: OnboardingModel.Step.self) { step in
                     switch step {
                     case .welcome: WelcomeStep(model: model)
+                    case .parentAccount: ParentAccountStep(model: model)
                     case .familyName: FamilyNameStep(model: model)
                     case .pairing: PairingStep(model: model)
+                    case .demoRole: DemoRoleStep(model: model)
                     case let .permission(kind): PermissionStep(model: model, kind: kind)
                     }
                 }
@@ -62,7 +65,14 @@ struct WelcomeStep: View {
                 Button("This is my child’s device") { model.choose(.child) }
                     .buttonStyle(.kinSecondary)
                     .accessibilityIdentifier("onboarding.child")
-                Text("Demo build: a simulated family, no account needed.").font(.kinCaption).foregroundStyle(KinColor.textTertiary)
+                if model.supportsAccounts {
+                    Button("Try the demo — no account needed") { model.chooseDemo() }
+                        .font(.kinSubheadline.weight(.semibold))
+                        .padding(.top, KinSpace.xs)
+                        .accessibilityIdentifier("onboarding.demo")
+                } else {
+                    Text("Demo build: a simulated family, no account needed.").font(.kinCaption).foregroundStyle(KinColor.textTertiary)
+                }
             }
         }
         .padding(KinSpace.lg)
@@ -96,16 +106,148 @@ struct FamilyNameStep: View {
                 .focused($focused)
                 .padding(KinSpace.md)
                 .background(KinColor.surface, in: RoundedRectangle(cornerRadius: KinRadius.md))
-                .onSubmit(model.submitFamilyName)
+                .onSubmit { Task { await model.submitFamilyName() } }
+            VStack(alignment: .leading, spacing: KinSpace.xs) {
+                Text("Your children will see you as").font(.kinSubheadline).foregroundStyle(KinColor.textSecondary)
+                Picker("Relationship", selection: $model.relationship) {
+                    ForEach(OnboardingModel.relationships, id: \.self) { Text($0).tag($0) }
+                }
+                .pickerStyle(.segmented)
+            }
+            if let error = model.errorMessage {
+                InlineBanner(.error, message: error)
+            }
             Spacer()
-            Button("Continue", action: model.submitFamilyName)
-                .buttonStyle(.kinPrimary)
-                .disabled(model.familyName.trimmingCharacters(in: .whitespaces).isEmpty)
-                .accessibilityIdentifier("onboarding.continue")
+            Button {
+                Task { await model.submitFamilyName() }
+            } label: {
+                if model.isWorking {
+                    ProgressView().tint(.white)
+                } else {
+                    Text("Continue")
+                }
+            }
+            .buttonStyle(.kinPrimary)
+            .disabled(model.familyName.trimmingCharacters(in: .whitespaces).isEmpty || model.isWorking)
+            .accessibilityIdentifier("onboarding.continue")
         }
         .padding(KinSpace.lg)
         .kinScreenBackground()
         .onAppear { focused = true }
+    }
+}
+
+/// Parent account: create or sign in (email + password; Supabase Auth).
+struct ParentAccountStep: View {
+    @Bindable var model: OnboardingModel
+    @FocusState private var field: Field?
+
+    enum Field { case name, email, password }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: KinSpace.lg) {
+                Text(model.isCreatingAccount ? "Create your parent account" : "Welcome back").font(.kinLargeTitle)
+                Picker("Mode", selection: $model.isCreatingAccount) {
+                    Text("Create account").tag(true)
+                    Text("Sign in").tag(false)
+                }
+                .pickerStyle(.segmented)
+                VStack(spacing: KinSpace.sm) {
+                    if model.isCreatingAccount {
+                        field("Your name", text: $model.parentName, content: .name, focus: .name)
+                            .textInputAutocapitalization(.words)
+                    }
+                    field("Email", text: $model.email, content: .emailAddress, focus: .email)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                    SecureField("Password (8+ characters)", text: $model.password)
+                        .textContentType(.password)
+                        .focused($field, equals: .password)
+                        .submitLabel(.go)
+                        .onSubmit { Task { await model.submitAccount() } }
+                        .padding(KinSpace.md)
+                        .background(KinColor.surface, in: RoundedRectangle(cornerRadius: KinRadius.md))
+                        .accessibilityIdentifier("onboarding.password")
+                }
+                if let error = model.errorMessage {
+                    InlineBanner(.error, message: error)
+                }
+                Button {
+                    field = nil
+                    Task { await model.submitAccount() }
+                } label: {
+                    if model.isWorking {
+                        ProgressView().tint(.white)
+                    } else {
+                        Text(model.isCreatingAccount ? "Create account" : "Sign in")
+                    }
+                }
+                .buttonStyle(.kinPrimary)
+                .disabled(model.isWorking)
+                .accessibilityIdentifier("onboarding.submitAccount")
+                Text(
+                    """
+                    Your family’s data is private to your family and protected by row-level security. You can \
+                    delete your account anytime in Settings.
+                    """
+                )
+                .font(.kinFootnote)
+                .foregroundStyle(KinColor.textSecondary)
+            }
+            .padding(KinSpace.lg)
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .kinScreenBackground()
+        .onAppear { field = model.isCreatingAccount ? .name : .email }
+    }
+
+    private func field(_ title: LocalizedStringKey, text: Binding<String>, content: UITextContentType, focus: Field) -> some View {
+        TextField(title, text: text)
+            .textContentType(content)
+            .focused($field, equals: focus)
+            .submitLabel(.next)
+            .padding(KinSpace.md)
+            .background(KinColor.surface, in: RoundedRectangle(cornerRadius: KinRadius.md))
+    }
+}
+
+/// "Try the demo": pick which side of the simulated family to explore.
+struct DemoRoleStep: View {
+    let model: OnboardingModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: KinSpace.lg) {
+            Text("Explore the demo").font(.kinLargeTitle)
+            Text("A simulated family runs on this device — nothing is shared and no permissions are needed.")
+                .foregroundStyle(KinColor.textSecondary)
+            Button { model.startDemo(as: .parent) } label: {
+                StatusRow(
+                    symbol: "person.fill",
+                    tint: KinColor.brand,
+                    title: String(localized: "Parent’s view"),
+                    subtitle: String(localized: "Family map, School Mode controls, activity and alerts")
+                )
+            }
+            .buttonStyle(.kinPressable)
+            .kinCard()
+            .accessibilityIdentifier("onboarding.demoParent")
+            Button { model.startDemo(as: .child) } label: {
+                StatusRow(
+                    symbol: "figure.child",
+                    tint: KinColor.info,
+                    title: String(localized: "Child’s view"),
+                    subtitle: String(localized: "Check-ins, extra-time requests, SOS and help")
+                )
+            }
+            .buttonStyle(.kinPressable)
+            .kinCard()
+            .accessibilityIdentifier("onboarding.demoChild")
+            Spacer()
+        }
+        .padding(KinSpace.lg)
+        .kinScreenBackground()
     }
 }
 
@@ -125,15 +267,25 @@ struct PairingStep: View {
                 .padding(KinSpace.md)
                 .background(KinColor.surface, in: RoundedRectangle(cornerRadius: KinRadius.md))
                 .accessibilityIdentifier("onboarding.code")
-            if let error = model.pairingError {
+            if let error = model.errorMessage {
                 InlineBanner(.error, message: error)
             }
-            Button("Use demo code") { model.pairingCode = "482913" }.font(.kinSubheadline)
+            if model.isDemo {
+                Button("Use demo code") { model.pairingCode = "482913" }.font(.kinSubheadline)
+            }
             Spacer()
-            Button("Join") { Task { await model.submitPairingCode() } }
-                .buttonStyle(.kinPrimary)
-                .disabled(!model.isPairingCodeComplete)
-                .accessibilityIdentifier("onboarding.join")
+            Button {
+                Task { await model.submitPairingCode() }
+            } label: {
+                if model.isWorking {
+                    ProgressView().tint(.white)
+                } else {
+                    Text("Join")
+                }
+            }
+            .buttonStyle(.kinPrimary)
+            .disabled(!model.isPairingCodeComplete || model.isWorking)
+            .accessibilityIdentifier("onboarding.join")
         }
         .padding(KinSpace.lg)
         .kinScreenBackground()
@@ -158,7 +310,7 @@ struct PermissionStep: View {
             Button {
                 Task { await model.request(kind) }
             } label: {
-                if model.isRequesting {
+                if model.isWorking {
                     ProgressView().tint(.white)
                 } else {
                     Text("Continue")

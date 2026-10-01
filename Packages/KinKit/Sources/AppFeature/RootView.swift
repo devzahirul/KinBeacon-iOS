@@ -18,6 +18,7 @@ import RequestTimeFeature
 import Routing
 import Session
 import SettingsFeature
+import UIKit
 
 /// Picks the UI for the device's role. Kept trivial so the first frame is cheap.
 public struct KinRootView: View {
@@ -31,8 +32,17 @@ public struct KinRootView: View {
         Group {
             switch container.phase {
             case .onboarding:
-                OnboardingView(model: OnboardingModel(permissions: OnboardingPermissions()) { result in
-                    container.completeOnboarding(role: result.role, familyName: result.familyName)
+                OnboardingView(model: OnboardingModel(
+                    permissions: container.onboardingPermissions(),
+                    account: container.supportsLiveAccounts ? container.liveBackend : nil,
+                    deviceModel: UIDevice.current.model
+                ) { result in
+                    container.completeOnboarding(
+                        role: result.role,
+                        familyName: result.familyName,
+                        isDemo: result.isDemo,
+                        membership: result.membership
+                    )
                 })
             case let .parent(runtime):
                 ParentRootView(runtime: runtime, container: container)
@@ -40,10 +50,21 @@ public struct KinRootView: View {
                 ChildRootView(runtime: runtime, container: container)
             }
         }
-        .environment(\.viewFactories, AppPickers.factories(live: !AppContainer.isSimulator && !container.isDemo))
+        .environment(\.viewFactories, AppPickers.factories(pickerContext))
         .tint(KinColor.brand)
         .onAppear { Perf.event("launch.firstFrame") }
         .onOpenURL { container.handle(url: $0) }
+    }
+}
+
+extension KinRootView {
+    private var pickerContext: AppPickers.Context {
+        guard !container.isDemo else { return .demo }
+        switch container.phase {
+        case .child: return container.usesRealPlatformServices ? .childLive : .demo
+        case .parent: return .parentLive
+        case .onboarding: return .demo
+        }
     }
 }
 
@@ -69,7 +90,14 @@ struct ParentRootView: View {
             }
             .badge(runtime.store.pendingRequests.count)
             tab(.family, title: String(localized: "Family"), symbol: "person.2.fill") {
-                FamilyView(store: runtime.store, showsInvite: $runtime.showsInvite, navigate: push(.family))
+                FamilyView(
+                    store: runtime.store,
+                    showsInvite: $runtime.showsInvite,
+                    invite: runtime.account.map { account in { try await account.inviteChild($0) } },
+                    places: runtime.backend,
+                    removeChild: { try await runtime.backend.removeChild($0) },
+                    navigate: push(.family)
+                )
             }
         }
         .task { await runtime.run() }
@@ -125,11 +153,11 @@ struct ParentDestination: View {
         case .notifications:
             NotificationsView(store: runtime.store, navigate: navigate)
         case .places:
-            FamilyView(store: runtime.store, showsInvite: .constant(false), navigate: navigate)
+            FamilyView(store: runtime.store, showsInvite: .constant(false), places: runtime.backend, navigate: navigate)
         case .settings:
             SettingsView(
                 info: .init(
-                    memberName: "Sarah",
+                    memberName: runtime.store.snapshot?.members.first { $0.role == .parent }?.name ?? "",
                     role: .parent,
                     familyName: runtime.familyName,
                     isDemo: runtime.isDemo,
@@ -138,13 +166,14 @@ struct ParentDestination: View {
                 ),
                 liveScreenTime: .constant(false),
                 switchRole: container.switchRole,
-                signOut: container.signOut
+                signOut: container.signOut,
+                deleteAccount: runtime.isDemo ? nil : { try await container.deleteAccount() }
             )
         }
     }
 
     private func profile(_ id: MemberID) -> ChildProfileModel {
-        ChildProfileModel(memberID: id, store: runtime.store, activity: runtime.backend, controls: runtime.backend)
+        ChildProfileModel(memberID: id, store: runtime.store, activity: runtime.backend, controls: runtime.backend, admin: runtime.backend)
     }
 }
 
@@ -153,11 +182,14 @@ struct ParentDestination: View {
 struct ChildRootView: View {
     @Bindable var runtime: ChildRuntime
     let container: AppContainer
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         TabView(selection: $runtime.selectedTab) {
             tab(.home, title: String(localized: "Home"), symbol: "house.fill") {
-                ChildHomeView(store: runtime.store, navigate: push(.home))
+                ChildHomeView(store: runtime.store, navigate: push(.home)) {
+                    Task { await container.signOut() }
+                }
             }
             tab(.activity, title: String(localized: "Activity"), symbol: "chart.bar.fill") {
                 ChildActivityView(store: runtime.store, model: ActivityModel(service: runtime.backend))
@@ -172,7 +204,16 @@ struct ChildRootView: View {
                 settings
             }
         }
-        .environment(\.viewFactories, AppPickers.factories(live: runtime.liveScreenTimeEnabled && !AppContainer.isSimulator))
+        .environment(
+            \.viewFactories,
+            AppPickers.factories(runtime.liveScreenTimeEnabled && container.usesRealPlatformServices ? .childLive : .demo)
+        )
+        .onChange(of: scenePhase) { _, phase in
+            // Coming back to the app is when a removal or new controls become visible.
+            if phase == .active {
+                Task { await runtime.store.refresh() }
+            }
+        }
         .task { await runtime.run() }
     }
 
@@ -188,7 +229,11 @@ struct ChildRootView: View {
             ),
             liveScreenTime: Binding(get: { runtime.liveScreenTimeEnabled }, set: { container.setLiveScreenTime($0) }),
             switchRole: container.switchRole,
-            signOut: container.signOut
+            signOut: container.signOut,
+            deleteAccount: runtime.isDemo ? nil : { try await container.deleteAccount() },
+            schoolApps: runtime.liveScreenTimeEnabled && container.usesRealPlatformServices
+                ? Binding(get: { runtime.schoolApps }, set: { runtime.schoolApps = $0 })
+                : nil
         )
     }
 

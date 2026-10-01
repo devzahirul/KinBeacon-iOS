@@ -29,6 +29,7 @@ public final class ChildRuntime {
     let familyName: String
     let liveScreenTimeAvailable: Bool
     let liveScreenTimeEnabled: Bool
+    let memberID: MemberID
 
     @ObservationIgnored private let database: DeferredDatabase
     @ObservationIgnored private let pipeline: LocationPipeline
@@ -57,6 +58,7 @@ public final class ChildRuntime {
         self.familyName = familyName
         self.liveScreenTimeAvailable = liveScreenTimeAvailable
         self.liveScreenTimeEnabled = liveScreenTimeEnabled
+        self.memberID = memberID
         routers = Dictionary(uniqueKeysWithValues: ChildTab.allCases.map { ($0, Router<ChildRoute>()) })
         store = CompanionStore(service: backend)
 
@@ -76,6 +78,19 @@ public final class ChildRuntime {
         sync
     }
 
+    // MARK: School Mode apps chosen on this device
+
+    var schoolApps: AppSelection {
+        get { policyStore.loadPolicy()?.deviceAllowedApps ?? AppSelection() }
+        set {
+            var policy = policyStore.loadPolicy()
+                ?? SharedPolicy(configuration: .defaults(for: memberID), childName: "", guardianName: familyName, updatedAt: Date())
+            policy.deviceAllowedApps = newValue
+            try? policyStore.save(policy)
+            Task { try? await screenTime.apply(policy.configuration) }
+        }
+    }
+
     func router(_ tab: ChildTab) -> Router<ChildRoute> {
         routers[tab] ?? Router()
     }
@@ -90,10 +105,21 @@ public final class ChildRuntime {
         async let power: Void = followPower()
         async let connectivity: Void = flushWhenOnline()
         async let setup: Void = initialSync()
-        _ = await (dashboard, power, connectivity, setup)
+        async let commands: Void = followCommands()
+        _ = await (dashboard, power, connectivity, setup, commands)
+    }
+
+    /// Realtime command delivery while the app runs (the silent push + heartbeat cover the rest).
+    private func followCommands() async {
+        for await command in backend.commandUpdates() {
+            _ = await process(command)
+        }
     }
 
     private func initialSync() async {
+        if let places = try? await backend.places() {
+            await location.monitor(places: places)
+        }
         await applyLatestControls()
         await reportPermissionsIfChanged()
         await drainShieldRequests()
@@ -177,6 +203,9 @@ public final class ChildRuntime {
         if outcome == .executed {
             await execute(command.action)
         }
+        if outcome != .failed {
+            try? await backend.acknowledge(command.id)
+        }
         return outcome
     }
 
@@ -186,6 +215,7 @@ public final class ChildRuntime {
             await pipeline.flushNow()
         case .applyControls:
             await applyLatestControls()
+            await store.refresh()
         case let .grantExtraTime(requestID, minutes):
             try? await screenTime.grantExtraTime(ExtraTimeGrant(requestID: requestID, startsAt: Date(), minutes: minutes))
         case .denyExtraTime:

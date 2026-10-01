@@ -37,8 +37,10 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>KinAPIBaseURL</key>
-	<string>$(KIN_API_BASE_URL)</string>
+	<key>KinSupabaseHost</key>
+	<string>$(SUPABASE_HOST)</string>
+	<key>KinSupabaseKey</key>
+	<string>$(SUPABASE_PUBLISHABLE_KEY)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

@@ -9,8 +9,8 @@
 ![Swift 6](https://img.shields.io/badge/Swift-6%20strict%20concurrency-F05138?logo=swift&logoColor=white)
 ![iOS 17+](https://img.shields.io/badge/iOS-17%2B-000?logo=apple)
 ![SwiftUI](https://img.shields.io/badge/UI-SwiftUI%20%2B%20Observation-1575F9)
-![Dependencies](https://img.shields.io/badge/third--party%20deps-0-success)
-![Tests](https://img.shields.io/badge/tests-100%20unit%20%2B%2012%20UI-success)
+![Backend](https://img.shields.io/badge/backend-Supabase%20%2B%20RLS%20%2B%20Realtime-3ECF8E)
+![Tests](https://img.shields.io/badge/tests-113%20unit%20%2B%2015%20UI-success)
 ![Launch](https://img.shields.io/badge/cold%20launch-400–442%20ms%20(iPhone%2013)-blueviolet)
 
 </div>
@@ -27,11 +27,12 @@
 
 | Claim | Evidence |
 |---|---|
-| Production-grade **architecture** | 29 SPM modules, features never import each other, a pure `Domain` layer, every platform framework confined to one adapter module → [Architecture](#architecture) |
+| A **real, shippable product** | live backend (Supabase: Auth, RLS-protected Postgres, Realtime, Edge Function for APNs) — parent sign-up, family, 6-digit device pairing, account deletion — verified end to end **on a physical iPhone** by UI tests against the live backend; App Store package in [docs/APP_STORE.md](docs/APP_STORE.md) |
+| Production-grade **architecture** | 30 SPM modules, features never import each other, a pure `Domain` layer, every platform framework confined to one adapter module → [Architecture](#architecture) |
 | **System-level APIs** a parental-control app needs | FamilyControls + ManagedSettings + DeviceActivity with **4 app extensions**, CoreLocation (`CLLocationUpdate`, `CLMonitor`, `CLBackgroundActivitySession`, significant-change), APNs silent pushes, BGTaskScheduler, SwiftData, MetricKit → [System integrations](#system-integrations) |
 | **Swift 6 concurrency**, not just async/await sprinkled on | `-swift-version 6`, complete strict checking, `-warnings-as-errors`, actors for every stateful service, `@MainActor @Observable` view models, zero `@unchecked Sendable` in product code → [Concurrency](#swift-concurrency-model) |
 | **Fast**: measured, not claimed | cold launch **400 ms** (child) / **442 ms** (parent) to first frame on an iPhone 13, Release, 5 runs each; **0** embedded dynamic frameworks → [Performance](#performance) |
-| **Tested** | **100** swift-testing unit tests in 0.54 s + **10** XCUITest flows + 2 launch-metric tests, all run on a **physical iPhone 13** → [Testing](#testing) |
+| **Tested** | **113** swift-testing tests (incl. a Supabase end-to-end suite and 19 pgTAP RLS tests server-side) + **13** XCUITests (2 against the live backend) + 2 launch-metric tests, all run on a **physical iPhone 13** → [Testing](#testing) |
 | **App Store ready** | privacy manifest, purpose strings, permission priming, data retention, Screen Time privacy model, signed remote commands → [App Store & policy](#app-store-readiness--platform-policy) |
 
 Built against the brief *"native mobile, background location, battery-efficient processing, push + remote commands,
@@ -67,22 +68,27 @@ brew install xcodegen          # the .xcodeproj is generated from project.yml
 make project && open KinBeacon.xcodeproj
 ```
 
-Pick the **KinBeacon** scheme and run it on a device or simulator. No account and no server are needed. The app ships
-with a deterministic **demo backend** that simulates the rest of the family in real time: Emma asks for more time,
-answers check-in requests, and Lucas's device has a location-permission problem you can fix remotely.
+Pick the **KinBeacon** scheme and run it on a device or simulator.
+
+- **Live mode** (real accounts): copy `Config/Supabase.local.example.xcconfig` to `Config/Supabase.local.xcconfig` with
+  your project host + *publishable* key, and apply `supabase/migrations` ([backend guide](supabase/README.md)).
+  Parent: *I'm a parent* → create account → name family → *Add a child's device* shows a code. Child (second phone):
+  *This is my child's device* → enter the code.
+- **Demo mode** (no account, no server): first screen → *Try the demo*. A deterministic in-process backend simulates the
+  rest of the family: Emma asks for more time, answers check-in requests, and Lucas's device has a location-permission
+  problem you can fix remotely. UI tests and screenshots run against it.
 
 | Command | What it does |
 |---|---|
 | `make run` | build, install and launch on the connected iPhone (parent role) |
-| `make test-unit` | 100 unit tests on the connected iPhone |
+| `make test-unit` | 113 unit tests (incl. live-backend end-to-end) on the connected iPhone |
 | `make test-ui` | critical-path UI tests + screenshot walk-through |
 | `make perf` | Release cold-launch measurement (`XCTApplicationLaunchMetric`) |
 | `make screenshots` | regenerate `docs/screenshots` from the UI walk-through |
 | `make lint` | SwiftLint `--strict` + SwiftFormat check |
 
-Launch arguments (used by the UI tests, never by hidden debug UI): `-KinRole parent|child`, `-KinResetState YES`,
-`-KinFastSimulation YES`, `-KinQuietDemo YES`, `-KinDisableAnimations YES`. Set `KIN_API_BASE_URL` to switch from the
-demo backend to the real HTTPS backend ([contract](docs/API.md)).
+Launch arguments (used by the UI tests, never by hidden debug UI): `-KinRole parent|child` (demo),
+`-KinResetState YES`, `-KinFastSimulation YES`, `-KinQuietDemo YES`, `-KinDisableAnimations YES`.
 
 Signing: team and bundle IDs live in `Config/Base.xcconfig` and `project.yml`. Automatic signing registers the
 Family Controls (development) and App Group capabilities on first device build.
@@ -94,7 +100,7 @@ Family Controls (development) and App Group capabilities on first device build.
 **Parent**
 - **Family map:** live member pins, safe-place geofences, member card with battery, last seen, and directions,
   *ask to check in*, arrival alerts.
-- **Child profile:** location and today's places, device (screen time, battery, mode), safety (permission health, alerts).
+- **Child profile:** location and today's places, device (screen time, battery, mode), safety (permission health, alerts), and *Remove from family* (deletes their history; their device shows it was removed).
 - **Controls:** *Protected* status, active-mode banner, School / Homework / Bedtime modes; schedule editor (hours,
   weekdays, allowed apps, restricted categories); app limits; downtime; always-allowed apps; web content filter.
 - **Activity:** Day / Week / Month screen time (Swift Charts), change vs the previous period, top apps, location
@@ -136,7 +142,7 @@ flowchart TD
     Features --> Routing & Session & DesignSystem
     subgraph Adapters["Adapters — one framework each"]
         LocationKit["LocationKit<br/>CoreLocation"] & ScreenTimeKit["ScreenTimeKit<br/>FamilyControls"] & Messaging["Messaging<br/>APNs · UserNotifications"]
-        Permissions & SyncEngine["SyncEngine<br/>outbox · NWPathMonitor"] & KinStore["KinStore<br/>SwiftData"] & Networking["Networking<br/>URLSession · SSE"] & DemoBackend
+        Permissions & SyncEngine["SyncEngine<br/>outbox · NWPathMonitor"] & KinStore["KinStore<br/>SwiftData"] & Supabase["SupabaseBackend<br/>Auth · PostgREST · Realtime"] & Networking["Networking<br/>URLSession · SSE"] & DemoBackend
     end
     Adapters --> Domain
     ScreenTimeKit --> STS[ScreenTimeShared<br/>App Group policy · ShieldEnforcer]
@@ -157,7 +163,7 @@ It's the lightest structure that still gives every property a senior reviewer lo
 | Features built and tested in isolation | Features depend only on `Domain`, `DesignSystem`, `Routing` and `Session`. A feature asks for `any ParentControlService`, so tests hand it a fake or the demo backend. |
 | No navigation spaghetti | Features emit typed routes (`ParentRoute`, `ChildRoute`). Only `AppFeature` maps route → screen, and deep links plus notification taps reuse the same router. |
 | Separate processes share one brain | The Screen Time extensions link only `ScreenTimeShared` + `Domain`, so the shield, the monitor and the app run the **same** `ModeResolver` on the **same** App Group document. |
-| Fast incremental builds | 29 small modules plus `InternalImportsByDefault`: editing a screen recompiles one module (3.7 s incremental on an M1). |
+| Fast incremental builds | 30 small modules plus `InternalImportsByDefault`: editing a screen recompiles one module (3.7 s incremental on an M1). |
 | A thin app target | `App/Sources/KinBeaconApp.swift` is 12 lines. Everything else is in `Packages/KinKit`. |
 
 **Why not TCA / VIPER / Clean-with-UseCases?** TCA is a strong choice when a team already uses it; here it would add a
@@ -251,8 +257,11 @@ Platform constraints this design handles explicitly (each is documented in code)
 A parent can send *locate now*, *apply controls*, *grant or deny extra time*, *ask for a check-in*, *fix permission*,
 and *start a live session*, all delivered as **silent pushes** (`content-available: 1`).
 
-- **Authenticated:** every command is HMAC-SHA256-signed with a per-device key exchanged at pairing
-  (`CommandAuthenticator`). A leaked APNs credential alone can't unlock a child's apps. Tampered, expired, misaddressed,
+- **Push is only a doorbell:** in the live backend a command is a row in `kinbeacon.commands` (RLS: only a parent of the
+  same family can insert, only the target device can read and acknowledge). The APNs payload carries no instruction —
+  it wakes the device, which fetches its commands over its authenticated connection (Realtime while running). For
+  transports where the payload itself carries the command, `CommandAuthenticator` HMAC-signs it with a per-device key,
+  so a leaked APNs credential alone can't unlock a child's apps. Tampered, expired, misaddressed,
   future-dated (beyond 5 min of skew) and replayed commands are rejected, and each case is unit-tested.
 - **Idempotent:** the command id is recorded in a SwiftData ledger *before* execution, so redelivery after a crash
   never runs it twice.
@@ -342,9 +351,9 @@ All numbers are from a **physical iPhone 13 running iOS 26.7** in Release, unles
 |---|---|
 | Cold launch → first frame, child | **400 ms** avg (353–444 ms) |
 | Cold launch → first frame, parent | **442 ms** avg (404–506 ms) |
-| Embedded dynamic frameworks | **0** (all 29 modules statically linked, no third-party code) |
+| Embedded dynamic frameworks | **0** (all 30 modules + supabase-swift statically linked) |
 | `.app` size, uncompressed | 14 MB (extensions 1.8 MB each, report 160 KB) |
-| Unit test suite on device | 100 tests in 0.54 s |
+| Unit test suite on device | 112 offline tests in < 1 s (+ the live end-to-end suite, ~10 s) |
 | Incremental Debug build (M1) | 3.7 s after editing a feature file |
 
 ### How launch time was reduced
@@ -353,7 +362,8 @@ All numbers are from a **physical iPhone 13 running iOS 26.7** in Release, unles
    CoreLocation, no MetricKit before the first frame (`launch.*` signposts prove it).
 2. **Defer and parallelise I/O.** SwiftData's `ModelContainer` is opened on a detached utility task
    *while* the first frame renders (`DeferredDatabase`). Runtimes start their streams from `.task {}`.
-3. **Zero dylibs.** No third-party frameworks and static SPM linking leave dyld nothing extra to load or bind.
+3. **Zero dylibs.** Static SPM linking (including supabase-swift) leaves dyld nothing extra to load or bind; the
+   Supabase client is created lazily on first use, never during a demo launch.
 4. **Cheap first frame.** Vector avatars and app tiles (no image decoding), system fonts, and a launch screen that
    matches the first frame's background, so there is no flash.
 5. **Stale-while-revalidate.** In production mode the last family snapshot is cached as one JSON file (cheaper than a
@@ -390,11 +400,13 @@ All numbers are from a **physical iPhone 13 running iOS 26.7** in Release, unles
 
 | Layer | Framework | Count | What it covers |
 |---|---|---|---|
-| Domain & core | swift-testing | 50 | schedules (incl. overnight and week-start locales), mode priority and grants, upload policy and thinning, geofence hysteresis, request policy, permission diffs, HMAC command auth, aggregation, backoff, `Broadcaster` |
-| Data | swift-testing | 22 | SwiftData outbox ordering, retries and ledger, retention; `SyncEngine` priority, coalescing, backoff, single-flight, durability; `APIClient` requests, errors and retries; SSE parsing; demo backend |
-| Platform | swift-testing | 14 | remote-command processor (exactly-once, expiry, 25 s budget), APNs payload parsing, notification content and interruption levels, shield copy, `ActivityPlan` limits, App Group store, `LocationPipeline` |
-| Feature view models | swift-testing | 14 | request-time waiting → approved, check-in, controls draft/save/rollback, family store, safety-alert fix, onboarding state machine, help, deep links and router |
-| UI (critical paths) | XCUITest | 10 | approve a request, fix an alert remotely, edit and save a schedule, request time, check in, hold-to-SOS, both onboarding paths, full screenshot walk-through |
+| Domain & core | swift-testing | 54 | schedules (incl. overnight and week-start locales), mode priority and grants, upload policy and thinning, geofence hysteresis, request policy, permission diffs, HMAC command auth, aggregation, backoff, `Broadcaster` |
+| Data | swift-testing | 24 | SwiftData outbox ordering, retries and ledger, retention; `SyncEngine` priority, coalescing, backoff, single-flight, durability; `APIClient` requests, errors and retries; SSE parsing; demo backend |
+| Platform | swift-testing | 16 | remote-command processor (exactly-once, expiry, 25 s budget), APNs payload parsing, notification content and interruption levels, shield copy, `ActivityPlan` limits, App Group store, `LocationPipeline` |
+| Feature view models | swift-testing | 18 | request-time waiting → approved, check-in, controls draft/save/rollback, family store, safety-alert fix, onboarding state machine, help, deep links and router |
+| Backend end-to-end | swift-testing + live Supabase | 1 suite | sign-up → family → invite → wrong code rejected → pair → location → place → idempotent request → approval → "Need help" alert → Realtime event → command → ack → permission alert → resolve → account deletion |
+| Database | pgTAP (19) | — | RLS isolation between families, single-use codes, no self-approval, server-owned revisions, account deletion |
+| UI (critical paths) | XCUITest | 13 | approve a request, fix an alert remotely, edit and save a schedule, remove a child, request time, check in, hold-to-SOS, both onboarding paths, screenshot walk-through, **live parent sign-up → invite → delete account**, **live child pairing** (test plays the parent over REST) |
 | Performance | XCTest metrics | 2 | Release cold launch, parent and child |
 
 - **Everything runs on a physical iPhone** (`make test`). The package tests are hosted in an empty `KinKitTestHost`
@@ -438,7 +450,7 @@ All numbers are from a **physical iPhone 13 running iOS 26.7** in Release, unles
 | **No HealthKit** | Not part of these flows, and App Review rejects HealthKit data used for non-health purposes | Add it only for a genuine wellbeing feature |
 | **One app, two roles** | Shared code, a single review, a simpler pairing story | Separate "Companion" target if store positioning demands it |
 | **Demo backend in the shipping binary** | Reviewers can run every flow offline; UI tests and screenshots are deterministic | Compile it out of production builds with a flag |
-| **Zero third-party dependencies** | Supply-chain and launch-time hygiene for an app holding children's data | Snapshot testing (swift-snapshot-testing) would be the first dependency worth adding |
+| **Supabase** (Postgres + RLS + Realtime) as the backend, `supabase-swift` as the **only** third-party dependency, confined to `SupabaseBackend` | Row-level security makes "a family only sees itself" a database guarantee (19 pgTAP tests), Realtime replaces a hand-built socket server; the rest of the app only sees Domain protocols | Swap for a custom API by implementing the same protocols (`RESTBackend` + `docs/API.md` already exist) |
 
 ---
 
@@ -473,22 +485,30 @@ scripts/                  icon generator, screenshot export, build/test helpers
 
 ---
 
+## Found on a real device
+
+Two bugs only showed up on hardware — and how they were handled is part of the point:
+
+| Symptom | Root cause (from the device crash log) | Fix + guard |
+|---|---|---|
+| Child app aborted right after pairing | `CLMonitor("kinbeacon.places")` → `NSInternalInconsistencyException: Monitor name is not valid` (dots aren't allowed); the simulator path never creates a CLMonitor | alphanumeric name, one process-wide single-flight `GeofenceMonitor`, and a test that creates the monitor with the real name **on the device** |
+| "This device is already paired" on re-onboarding | a previous Supabase session in the Keychain was reused for the child | every pairing signs out and uses a fresh device account; covered by the live pairing UI test |
+
 ## Limitations & roadmap
 
-Honest scope notes:
-- **Backend:** the HTTPS adapter and contract are implemented and tested against stubs, but no server ships in this
-  repository. The app runs on the demo backend unless `KIN_API_BASE_URL` is set.
-- **Pairing** accepts any 6-digit code in the demo. Production exchanges it for a device token and the command-signing
-  key, stored in the Keychain.
-- **Real Screen Time enforcement** needs a child account in Family Sharing (or `.individual` authorization) on a
-  physical device. It is **opt-in** in Settings so the demo never restricts a reviewer's own phone.
-- **Restricted categories** are informational in v1. Enforcement is an allow-list, because category tokens only come
-  from Apple's picker.
-- **Android** isn't in this repository. The domain contract (`docs/API.md`) is platform-neutral.
+- **Family Controls Distribution entitlement:** development builds work today; TestFlight/App Store builds need Apple to
+  approve the distribution entitlement for the app and its 4 extensions ([checklist](docs/APP_STORE.md)).
+- **Background push** needs an APNs key in the Edge Function secrets ([guide](supabase/README.md)); until then
+  updates arrive in real time while the app runs and via Background App Refresh.
+- **Screen-time numbers** on the parent's phone come from Apple's report and require the child in the parent's
+  Family Sharing group.
+- **Allowed apps** are chosen on the child's iPhone (Apple's app tokens are device-specific).
+- **Shared Supabase project:** for this portfolio the schema lives beside other apps in one project, so account
+  deletion removes KinBeacon data but keeps the shared login; a dedicated project would delete `auth.users` too.
+- **Android** isn't in this repository; the API contract is platform-neutral.
 
 Next: parent cold launch under 400 ms (defer `Map` by one frame), a performance baseline in CI, snapshot tests for
-every screen (light, dark, XXL Dynamic Type), Live Activity for an active SOS, and an App Intent for *Check in* from
-Siri or the Action button.
+every screen (light, dark, XXL Dynamic Type), Live Activity for an active SOS, and an App Intent for *Check in*.
 
 ---
 

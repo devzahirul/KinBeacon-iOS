@@ -11,6 +11,11 @@ public final class CompanionStore {
     public private(set) var requests: [TimeRequest] = []
     public private(set) var error: KinError?
 
+    /// The parent removed this device (its member row is gone).
+    public var isRemovedFromFamily: Bool {
+        error == .notFound
+    }
+
     @ObservationIgnored private let service: any CompanionService
     @ObservationIgnored public var onRequestUpdate: (@MainActor (TimeRequest) -> Void)?
 
@@ -48,6 +53,9 @@ public final class CompanionStore {
             error = nil
         } catch {
             self.error = error as? KinError ?? .server(status: 0)
+            if self.error == .notFound {
+                dashboard = nil
+            }
         }
     }
 

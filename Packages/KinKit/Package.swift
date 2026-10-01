@@ -6,7 +6,7 @@
 //
 //   AppFeature ─┬─► *Feature ──► Routing · Session ─► DesignSystem ─► Domain ─► KinCore
 //               ├─► LocationKit · ScreenTimeKit · Messaging · Permissions · SyncEngine   (platform adapters)
-//               ├─► KinStore (SwiftData) · Networking (URLSession) · DemoBackend           (data adapters)
+//               ├─► KinStore (SwiftData) · SupabaseBackend · Networking (URLSession) · DemoBackend (data adapters)
 //               └─► ScreenTimeShared ◄── Screen Time extensions (Monitor / Shield / ShieldAction / Report)
 //
 // • `Domain` is pure Swift: models, policies and the service protocols every adapter implements. All business rules
@@ -54,10 +54,14 @@ let package = Package(
         .library(name: "ScreenTimeShared", targets: ["ScreenTimeShared"]),
         // Linked by the app-hosted unit-test bundle so the package tests also run on a physical iPhone.
         .library(name: "KinKitTesting", targets: [
-            "KinCore", "Domain", "ScreenTimeShared", "KinStore", "Networking", "DemoBackend", "SyncEngine",
+            "KinCore", "Domain", "ScreenTimeShared", "KinStore", "Networking", "DemoBackend", "SupabaseBackend", "SyncEngine",
             "LocationKit", "ScreenTimeKit", "Messaging", "Permissions", "DesignSystem", "Routing", "Session",
             "TestSupport",
         ] + features),
+    ],
+    dependencies: [
+        // The only third-party dependency, confined to the SupabaseBackend module.
+        .package(url: "https://github.com/supabase/supabase-swift", from: "2.55.0"),
     ],
     targets: [
         // MARK: Core
@@ -71,6 +75,14 @@ let package = Package(
         .module("KinStore", dependencies: ["KinCore", "Domain"]),
         .module("Networking", dependencies: ["KinCore", "Domain"]),
         .module("DemoBackend", dependencies: ["KinCore", "Domain"]),
+        .target(
+            name: "SupabaseBackend",
+            dependencies: [
+                "KinCore", "Domain",
+                .product(name: "Supabase", package: "supabase-swift"),
+            ],
+            swiftSettings: strictSettings
+        ),
         .module("SyncEngine", dependencies: ["KinCore", "Domain"]),
 
         // MARK: Platform adapters
@@ -107,7 +119,7 @@ let package = Package(
 
         .module("AppFeature", dependencies: [
             "KinCore", "Domain", "DesignSystem", "Routing", "Session", "ScreenTimeShared",
-            "KinStore", "Networking", "DemoBackend", "SyncEngine",
+            "KinStore", "Networking", "DemoBackend", "SupabaseBackend", "SyncEngine",
             "LocationKit", "ScreenTimeKit", "Messaging", "Permissions",
         ] + features.map { Target.Dependency(stringLiteral: $0) }),
 
@@ -115,7 +127,7 @@ let package = Package(
 
         .module("TestSupport", dependencies: ["KinCore", "Domain"]),
         .tests("DomainTests", dependencies: ["Domain", "KinCore"]),
-        .tests("DataTests", dependencies: ["Domain", "KinCore", "KinStore", "Networking", "DemoBackend", "SyncEngine"]),
+        .tests("DataTests", dependencies: ["Domain", "KinCore", "KinStore", "Networking", "DemoBackend", "SyncEngine", "SupabaseBackend"]),
         .tests("PlatformTests", dependencies: ["Domain", "KinCore", "Messaging", "ScreenTimeShared", "LocationKit"]),
         .tests("FeatureTests", dependencies: [
             "Domain", "KinCore", "Routing", "Session", "DemoBackend",
